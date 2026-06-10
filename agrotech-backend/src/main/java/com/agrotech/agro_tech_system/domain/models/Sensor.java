@@ -38,6 +38,7 @@ public class Sensor {
 		}
 		
 		   //inicializar propriedades
+		this.id = id;
 		this.nome = nome;
 		this.localizacao = localizacao;
 		this.ativo = ativo;
