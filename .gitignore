@@ -1,97 +1,33 @@
-# ========================
-# Angular (Frontend)
-# ========================
-agrotech-frontend/node_modules/
-agrotech-frontend/dist/
-agrotech-frontend/.angular/
-agrotech-frontend/.cache/
-agrotech-frontend/.eslintcache
-agrotech-frontend/*.tsbuildinfo
-agrotech-frontend/npm-debug.log*
-agrotech-frontend/yarn-debug.log*
-agrotech-frontend/yarn-error.log*
+HELP.md
+target/
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
 
-# ========================
-# Java / Spring Boot (Backend)
-# ========================
-agrotech-backend/target/
-agrotech-backend/*.class
-agrotech-backend/*.jar
-agrotech-backend/*.war
-agrotech-backend/*.ear
-agrotech-backend/hs_err_pid*
-agrotech-backend/.mvn/wrapper/maven-wrapper.jar
-
-# Maven
-.mvn/
-!.mvn/wrapper/maven-wrapper.properties
-
-# Gradle (caso use)
-agrotech-backend/.gradle/
-agrotech-backend/build/
-
-# ========================
-# Variáveis de Ambiente
-# ========================
-.env
-.env.local
-.env.development
-.env.development.local
-.env.test
-.env.test.local
-.env.production
-.env.production.local
-.env.staging
-agrotech-backend/src/main/resources/application-local.properties
-agrotech-backend/src/main/resources/application-local.yml
-
-# ========================
-# Logs
-# ========================
-logs/
-*.log
-
-# ========================
-# Testes / Cobertura
-# ========================
-agrotech-frontend/coverage/
-agrotech-backend/target/surefire-reports/
-agrotech-backend/target/failsafe-reports/
-
-# ========================
-# IDEs e Editores
-# ========================
-.vscode/
-!.vscode/extensions.json
-.idea/
-*.iml
-*.iws
-*.ipr
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-.project
+### STS ###
+.apt_generated
 .classpath
-.settings/
 .factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
 
-# ========================
-# Sistema Operacional
-# ========================
-.DS_Store
-Thumbs.db
-desktop.ini
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
 
-# ========================
-# Docker
-# ========================
-docker-compose.override.yml
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
 
-# ========================
-# Banco de Dados local
-# ========================
-*.sqlite
-*.sqlite3
-*.db
+### VS Code ###
+.vscode/
