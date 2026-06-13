@@ -9,5 +9,5 @@ public interface LeituraRepository {
 
 Leitura salvar(Leitura leitura);
 	
-	List<Leitura> BuscarPorSensor(String sensorId);
+	List<Leitura> buscarPorSensor(String sensorId);
 }
