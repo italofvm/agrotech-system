@@ -28,7 +28,7 @@ public class LeituraRepositoryAdapter implements LeituraRepository {
 	}
 	
 	@Override
-	public List<Leitura> BuscarPorSensor(String sensorId) {
+	public List<Leitura> buscarPorSensor(String sensorId) {
 		return jpa.findBySensorId(sensorId).stream().map(this::toDomain).toList();
 	}
 	
