@@ -4,10 +4,9 @@ import java.util.List;
 
 import com.agrotech.agro_tech_system.domain.models.Leitura;
 
-
 public interface LeituraRepository {
 
-Leitura salvar(Leitura leitura);
-	
+	Leitura salvar(Leitura leitura);
+
 	List<Leitura> BuscarPorSensor(String sensorId);
 }

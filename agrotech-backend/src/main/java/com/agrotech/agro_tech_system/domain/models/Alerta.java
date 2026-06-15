@@ -48,7 +48,6 @@ public class Alerta {
         this.dataHora = dataHora;
     }
 
-    // comportamento de domínio
     public void resolver() {
         this.status = StatusAlerta.RESOLVIDO;
     }

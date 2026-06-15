@@ -10,7 +10,7 @@ import com.agrotech.agro_tech_system.domain.models.Sensor;
 import com.agrotech.agro_tech_system.domain.repository.LeituraRepository;
 import com.agrotech.agro_tech_system.infra.persistence.entity.LeituraEntity;
 import com.agrotech.agro_tech_system.infra.persistence.entity.SensorEntity;
-import com.agrotech.agro_tech_system.infra.persistence.repository.JpaSensorLocalizacaoRepository;
+import com.agrotech.agro_tech_system.infra.persistence.repository.JpaLeituraRepository;
 import com.agrotech.agro_tech_system.infra.persistence.repository.JpaSensorRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -19,18 +19,17 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class LeituraRepositoryAdapter implements LeituraRepository {
 	
-	private final JpaSensorLocalizacaoRepository jpa = null;
+	private final JpaLeituraRepository jpa = null;
 	private final JpaSensorRepository sensorJpa = null;
 	
 	@Override
 	public Leitura salvar(Leitura leitura) {
-		var savedEntity = jpa.save(toEntity(leitura));
-		return toDomain(savedEntity);
+		return toDomain(jpa.save(toEntity(leitura)));
 	}
 	
 	@Override
 	public List<Leitura> BuscarPorSensor(String sensorId) {
-		return jpa.find
+		return jpa.findBySensorId(sensorId).stream().map(this::toDomain).toList();
 	}
 	
 	private Leitura toDomain(LeituraEntity entity) {

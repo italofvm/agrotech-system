@@ -39,4 +39,24 @@ public class SensorLocalizacaoEntity {
 	private LocalDateTime dataInicio;
 	
 	private LocalDateTime dataFim;
+	
+	public String getId() { return id; }
+	
+	public SensorEntity getSensor() { return sensor; }
+	
+	public String getLocalizacao() { return localizacao; }
+	
+	public LocalDateTime getDataInicio() { return dataInicio; }
+	
+	public LocalDateTime getDataFim() { return dataFim; }
+	
+	public void setId(String id) { this.id = id; }
+	
+	public void setLocalizacao(String localizacao) { this.localizacao = localizacao; }
+	
+	public void setDataInicio(LocalDateTime dataInicio) { this.dataInicio = dataInicio; }
+	
+	public void setDataFim(LocalDateTime dataFim) { this.dataFim = dataFim; }
+	
+	public void setSensor(SensorEntity sensor) { this.sensor = sensor; }
 }
