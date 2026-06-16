@@ -2,6 +2,8 @@ package com.agrotech.agro_tech_system.application.usecase.usuario;
 
 import com.agrotech.agro_tech_system.infra.persistence.entity.UsuarioEntity;
 import com.agrotech.agro_tech_system.infra.persistence.repository.JpaUsuarioRepository;
+import com.agrotech.agro_tech_system.infra.security.TokenService;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

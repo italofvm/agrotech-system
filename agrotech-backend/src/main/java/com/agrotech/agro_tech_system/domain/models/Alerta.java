@@ -15,7 +15,7 @@ public class Alerta {
     private String id;
     private Leitura leitura;
     private Regra regra;
-    private StatusAlerta  status;
+    private StatusAlerta status;
     private LocalDateTime dataHora;
 
     public Alerta(
@@ -48,7 +48,6 @@ public class Alerta {
         this.dataHora = dataHora;
     }
 
-    // comportamento de domínio
     public void resolver() {
         this.status = StatusAlerta.RESOLVIDO;
     }

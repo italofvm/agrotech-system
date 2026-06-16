@@ -7,10 +7,11 @@ import jakarta.validation.constraints.Positive;
 
 public record RegraRequestDTO (
 
-        @NotNull TipoSensor tipoSensor,
 
-        @NotNull OperadorRegra operador,
-
-        @Positive double valor) {
+@NotNull TipoSensor tipoSensor,
+    @NotNull OperadorRegra operador,
+    @Positive double valor,
+    @NotNull String mensagem
+) {
 
 }
