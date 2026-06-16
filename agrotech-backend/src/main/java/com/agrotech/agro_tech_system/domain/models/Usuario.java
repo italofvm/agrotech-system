@@ -30,6 +30,14 @@ public class Usuario {
 		this.role = role;
 	}
 
+	public String getId() { return id; }
+	
+	public String getUsername() { return login; }
+	
+	public String getPassword() { return senha; }
+	
+	public UserRole getRole() { return role; }
+	
 	public boolean isAdmin() {
 		return this.role == UserRole.ADMIN;
 	}

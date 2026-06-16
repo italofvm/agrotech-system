@@ -8,7 +8,6 @@ import com.agrotech.agro_tech_system.domain.models.Alerta;
 
 public interface AlertaRepository {
 
-
 	Alerta salvar(Alerta alerta);
 
     Optional<Alerta> buscarPorId(String id);
