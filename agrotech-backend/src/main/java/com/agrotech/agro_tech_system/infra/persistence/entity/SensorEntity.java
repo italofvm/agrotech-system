@@ -16,19 +16,6 @@ import java.util.List;
 @EqualsAndHashCode(of = "id")
 public class SensorEntity {
 
-	public SensorEntity() {	}
-	
-	public SensorEntity(String id, String nome, String localizacao, boolean ativo, 
-						TipoSensor tipo, AreaEntity area, List<LeituraEntity> leituras) {
-		this.id = id;
-		this.nome = nome;
-		this.localizacao = localizacao;
-		isAtivo = ativo;
-		this.tipo = tipo;
-		this.area = area;
-		this.leituras = leituras;
-	}
-	
 	@Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;

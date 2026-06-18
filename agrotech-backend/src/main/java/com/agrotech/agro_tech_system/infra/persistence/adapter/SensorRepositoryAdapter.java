@@ -26,7 +26,7 @@ public class SensorRepositoryAdapter implements SensorRepository {
                 .orElseGet(() -> {
                     var areaPadrao = jpaAreaRepository.findAll().stream().findFirst()
                             .orElseThrow(() -> new ValidacaoException("Cadastre ao menos uma area antes de criar sensores"));
-                    return new SensorEntity(null, null, null, null, areaPadrao, null);
+                    return new SensorEntity(null, null, null, false, null, areaPadrao, null);
                 });
 
         entity.setNome(sensor.getNome());

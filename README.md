@@ -6,23 +6,24 @@
 
 ## Sumário
 
-1. [Descrição do Projeto](#-descrição-do-projeto)
-2. [Principais Funcionalidades](#-principais-funcionalidades)
-3. [Arquitetura e Estrutura do Projeto](#-arquitetura-e-estrutura-do-projeto)
-4. [Tecnologias Utilizadas](#-tecnologias-utilizadas)
-5. [Pré-requisitos](#-pré-requisitos)
-6. [Instalação e Configuração](#-instalação-e-configuração)
-7. [Como Executar o Projeto](#-como-executar-o-projeto)
-8. [Como Utilizar](#-como-utilizar)
-9. [Endpoints da API](#-endpoints-da-api)
-10. [Banco de Dados](#-banco-de-dados)
-11. [Regras de Negócio](#-regras-de-negócio)
-12. [Testes](#-testes)
-13. [Melhorias Futuras](#-melhorias-futuras)
-14. [Contribuição](#-contribuição)
-15. [Licença](#-licença)
-16. [Autores](#-autores)
+## Sumário
 
+1. [Descrição do Projeto](#descrição-do-projeto)
+2. [Principais Funcionalidades](#principais-funcionalidades)
+3. [Arquitetura e Estrutura do Projeto](#arquitetura-e-estrutura-do-projeto)
+4. [Tecnologias Utilizadas](#tecnologias-utilizadas)
+5. [Pré-requisitos](#pré-requisitos)
+6. [Instalação e Configuração](#instalação-e-configuração)
+7. [Como Executar o Projeto](#como-executar-o-projeto)
+8. [Como Utilizar](#como-utilizar)
+9. [Endpoints da API](#endpoints-da-api)
+10. [Banco de Dados](#banco-de-dados)
+11. [Regras de Negócio](#regras-de-negócio)
+12. [Testes](#testes)
+13. [Melhorias Futuras](#melhorias-futuras)
+14. [Contribuição](#contribuição)
+15. [Licença](#licença)
+16. [Autores](#autores)
 ---
 
 ## Descrição do Projeto
@@ -628,7 +629,9 @@ Recomenda-se seguir o padrão [Conventional Commits](https://www.conventionalcom
 
 | Nome | Papel | Contato |
 |---|---|---|
-| *(nome do autor)* | Desenvolvedor Full Stack | *(e-mail ou GitHub)* |
+| *Arthur* | Desenvolvedor Full Stack | *Arthurkrz* |
+| *Italo* | Desenvolvedor Full Stack | *italofvm* |
+| *Rodrigo* | Desenvolvedor Back-End | *RodrigoMeinel-Developer* |
 
 ---
 
