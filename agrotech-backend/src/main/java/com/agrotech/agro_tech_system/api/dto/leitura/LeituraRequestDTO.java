@@ -11,7 +11,7 @@ public record LeituraRequestDTO(
         @NotNull Double valor,
 
         @NotNull
-        @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm") // Formato ISO 8601
+        @JsonFormat(shape = JsonFormat.Shape.STRING)
         LocalDateTime dataHora
 ) {
 }

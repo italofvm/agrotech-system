@@ -8,14 +8,12 @@ import java.util.Random;
 
 import org.springframework.stereotype.Service;
 
-import com.agrotech.agro_tech_system.application.usecase.alerta.GerarAlertaUseCase;
 import com.agrotech.agro_tech_system.domain.models.Alerta;
 import com.agrotech.agro_tech_system.domain.models.Leitura;
 import com.agrotech.agro_tech_system.domain.models.Regra;
 import com.agrotech.agro_tech_system.domain.models.Sensor;
 import com.agrotech.agro_tech_system.domain.repository.AlertaRepository;
 import com.agrotech.agro_tech_system.domain.repository.LeituraRepository;
-import com.agrotech.agro_tech_system.domain.repository.RegraRepository;
 import com.agrotech.agro_tech_system.domain.repository.SensorRepository;
 import com.agrotech.agro_tech_system.domain.service.AlertaService;
 import com.agrotech.agro_tech_system.domain.service.RegraService;
@@ -64,7 +62,6 @@ public class GerarLeituraUseCase {
 
             leituraRepository.salvar(leitura);
 
-            // 🔥 AQUI resolve TUDO
             List<Regra> regrasDisparadas = regraService.validar(leitura);
 
             for (Regra regra : regrasDisparadas) {

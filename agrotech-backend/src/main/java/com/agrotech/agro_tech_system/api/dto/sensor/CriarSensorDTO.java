@@ -8,7 +8,7 @@ public record CriarSensorDTO(
         @NotBlank
         String nome,
 
-        @NotBlank
+        @NotNull
         TipoSensor tipo,
 
         @NotBlank

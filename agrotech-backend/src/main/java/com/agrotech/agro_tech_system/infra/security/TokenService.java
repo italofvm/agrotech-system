@@ -7,7 +7,6 @@ import java.time.ZoneOffset;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.agrotech.agro_tech_system.api.dto.sensor.*;
 import com.agrotech.agro_tech_system.infra.persistence.entity.UsuarioEntity;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;

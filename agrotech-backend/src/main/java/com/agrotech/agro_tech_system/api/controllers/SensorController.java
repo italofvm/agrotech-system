@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import jakarta.validation.Valid;
+import io.swagger.v3.oas.annotations.Operation;
 import com.agrotech.agro_tech_system.api.dto.sensor.AtualizarSensorDTO;
 import com.agrotech.agro_tech_system.api.dto.sensor.CriarSensorDTO;
 import com.agrotech.agro_tech_system.api.dto.sensor.SensorResponseDTO;
@@ -34,23 +36,27 @@ public class SensorController {
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Void> criar(@RequestBody CriarSensorDTO criarSensor) {
+    @Operation(operationId = "criarSensor")
+    public ResponseEntity<Void> criar(@Valid @RequestBody CriarSensorDTO criarSensor) {
         cadastrarSensor.executar(criarSensor);
         return ResponseEntity.status(201).build();
     }
 
     @GetMapping
+    @Operation(operationId = "listarSensores")
     public ResponseEntity<List<SensorResponseDTO>> listar() {
         return ResponseEntity.ok(listarSensores.executar());
     }
 
     @GetMapping("/{id}")
+    @Operation(operationId = "buscarSensorPorId")
     public ResponseEntity<SensorResponseDTO> buscarPorId(@PathVariable String id) {
         return ResponseEntity.ok(listarSensores.buscarPorId(id));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
+    @Operation(operationId = "atualizarSensor")
     public ResponseEntity<Void> atualizar(
             @PathVariable String id,
             @RequestBody AtualizarSensorDTO atualizar) {
@@ -61,6 +67,7 @@ public class SensorController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
+    @Operation(operationId = "deletarSensor")
     public ResponseEntity<Void> deletar(@PathVariable String id) {
         deletarSensor.executar(id);
         return ResponseEntity.noContent().build();

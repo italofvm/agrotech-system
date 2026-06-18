@@ -32,5 +32,8 @@ public class RegraEntity {
     private double valor;
 
     @Column(nullable = false)
+    private String mensagem;
+
+    @Column(nullable = false)
     private boolean ativo;
 }
