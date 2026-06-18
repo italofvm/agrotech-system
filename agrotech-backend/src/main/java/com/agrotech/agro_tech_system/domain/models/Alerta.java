@@ -15,7 +15,7 @@ public class Alerta {
     private String id;
     private Leitura leitura;
     private Regra regra;
-    private StatusAlerta  status;
+    private StatusAlerta status;
     private LocalDateTime dataHora;
 
     public Alerta(

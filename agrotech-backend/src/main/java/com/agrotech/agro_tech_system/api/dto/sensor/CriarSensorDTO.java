@@ -11,7 +11,7 @@ public record CriarSensorDTO(
         @NotBlank
         TipoSensor tipo,
 
-        @NotNull
+        @NotBlank
         String localizacao
 ) {
 }

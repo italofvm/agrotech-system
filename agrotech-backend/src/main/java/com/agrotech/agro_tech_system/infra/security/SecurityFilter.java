@@ -17,46 +17,53 @@ import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-public class SecurityFilter extends OncePerRequestFilter {
-	
+public class SecurityFilter extends OncePerRequestFilter{
+
 	private final TokenService tokenService;
-	private final JpaUsuarioRepository jpa;
+	private final JpaUsuarioRepository repository;
 	
-	public SecurityFilter(TokenService tokenService, JpaUsuarioRepository jpa) {
-		this.tokenService = tokenService;
-		this.jpa = jpa;
-	}
 	
 	@Override
-	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, 
-			FilterChain filterChain) throws ServletException, IOException {
+	protected void doFilterInternal(
+			HttpServletRequest request, 
+			HttpServletResponse response, 
+			FilterChain filterChain)
+	
+			throws ServletException, IOException {
 		
-		var token = recuperarToken(request);
+		String token = recuperarToken(request);
+		if(token != null) {
+			
+		String subject = tokenService.getSubject(token);
+		var login = repository.findByLogin(subject);
 		
-		if (token != null) try {
+		if(login.isPresent()) {
+			var usuario = login.get();
+			var authentication = new UsernamePasswordAuthenticationToken(
+					usuario,
+					null,
+					usuario.getAuthorities()
+					);
 			
-			var subject = tokenService.getSubject(token);
-			var usuarioOpt = jpa.findByLogin(subject);
-			
-			if (usuarioOpt.isPresent()) {
-				
-				var usuario = usuarioOpt.get();
-				var authentication = new UsernamePasswordAuthenticationToken(
-					usuario, null, usuario.getAuthorities());
-				
-				SecurityContextHolder.getContext().setAuthentication(authentication);
-			}
-			
-		} catch (Exception ex) { SecurityContextHolder.clearContext(); }
-		
+			SecurityContextHolder.getContext()
+			    .setAuthentication(authentication);
+		}
+	  }
 		filterChain.doFilter(request, response);
+		
 	}
 	
 	private String recuperarToken(HttpServletRequest request) {
+	//	1ª buscar o header/cabeçalho da requisição - Authorization
+		String authorizationHeader = request.getHeader("Authorization");
 		
-		var authorizationHeader = request.getHeader("Authorization");
-		if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) return null;
+	//  2ªse o var (authorizationHeader) estiver vazia ou começar com Bearer vamos retornar null	
+		if(authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
+			return null;
+		}
 		
+	//  3ª Caso contrario, romever a string Bearer e ficar somento com o codigo, que na vdd é o token gerado	
 		return authorizationHeader.substring(7);
 	}
+
 }

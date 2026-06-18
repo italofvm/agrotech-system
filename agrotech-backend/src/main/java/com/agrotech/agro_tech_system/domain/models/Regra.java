@@ -15,14 +15,15 @@ public class Regra {
     private TipoSensor tipoSensor;
     private OperadorRegra operador;
     private double valor;
+    private String mensagem;
     private boolean ativo;
 
-    public Regra(
-            String id,
-            TipoSensor tipoSensor,
-            OperadorRegra operador,
-            double valor,
-            boolean ativo) {
+    public Regra(String id,
+                 TipoSensor tipoSensor,
+                 OperadorRegra operador,
+                 double valor,
+                 String mensagem,
+                 boolean ativo) {
 
         if (tipoSensor == null) {
             throw new ValidacaoException("Tipo do sensor é obrigatório");
@@ -36,16 +37,22 @@ public class Regra {
             throw new ValidacaoException("Valor deve ser maior que zero");
         }
 
+        if (mensagem == null || mensagem.isBlank()) {
+            throw new ValidacaoException("Mensagem é obrigatória");
+        }
+
         this.id = id;
         this.tipoSensor = tipoSensor;
         this.operador = operador;
         this.valor = valor;
+        this.mensagem = mensagem;
         this.ativo = ativo;
     }
 
-    // comportamento CORE do sistema
     public boolean deveGerarAlerta(double valorLeitura) {
-        if (!ativo) return false;
+        if (!ativo) {
+            return false;
+        }
 
         return switch (operador) {
             case MAIOR_QUE -> valorLeitura > valor;
@@ -53,6 +60,15 @@ public class Regra {
         };
     }
 
-    public void ativar() { this.ativo = true; }
-    public void desativar() { this.ativo = false; }
+    public void ativar() {
+        this.ativo = true;
+    }
+
+    public void desativar() {
+        this.ativo = false;
+    }
+
+    public boolean estaAtiva() {
+        return ativo;
+    }
 }

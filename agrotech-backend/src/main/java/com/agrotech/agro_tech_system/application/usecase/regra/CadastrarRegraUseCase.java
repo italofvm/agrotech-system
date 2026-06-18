@@ -12,14 +12,18 @@ public class CadastrarRegraUseCase {
 
     private final RegraRepository regraRepository;
 
-    public Regra executar(RegraRequestDTO dto){
-        Regra regra = new Regra(
-                null,
-                dto.tipoSensor(),
-                dto.operador(),
-                dto.valor(),
-                true
-        );
-        return regraRepository.salvar(regra);
-    }
+
+public Regra executar(RegraRequestDTO dto) {
+    Regra regra = new Regra(
+            null,
+            dto.tipoSensor(),
+            dto.operador(),
+            dto.valor(),
+            dto.mensagem(),
+            true
+    );
+
+    return regraRepository.salvar(regra);
+}
+
 }
