@@ -1,53 +1,43 @@
 package com.agrotech.agro_tech_system.infra.persistence.adapter;
 
-import java.util.Optional;
-
-import org.springframework.stereotype.Component;
-
 import com.agrotech.agro_tech_system.domain.models.Usuario;
 import com.agrotech.agro_tech_system.domain.repository.UsuarioRepository;
-import com.agrotech.agro_tech_system.infra.persistence.entity.UsuarioEntity;
+import com.agrotech.agro_tech_system.infra.persistence.mapper.PersistenceMapper;
 import com.agrotech.agro_tech_system.infra.persistence.repository.JpaUsuarioRepository;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
 
-@Component
+import java.util.Optional;
+
+@Repository
 @RequiredArgsConstructor
 public class UsuarioRepositoryAdapter implements UsuarioRepository {
-	
-	private final JpaUsuarioRepository jpa = null;
-	
-	public Optional<Usuario> buscarPorId(String id){
-		return jpa.findById(id).map(this::toDomain);
-	}
-	
-	public Optional<Usuario> buscarPorLogin(String login){
-		return jpa.findByLogin(login).map(this::toDomain);
-	}
-	
-	public void salvar(Usuario usuario) {
-		jpa.save(toEntity(usuario));
-	}
-	
-	public void deletar(String id) {
-		jpa.deleteById(id);
-	}
-	
-	public boolean existeLogin(String login) {
-		return jpa.findByLogin(login).isPresent();
-	}
-	
-	private Usuario toDomain(UsuarioEntity entity) {
-		return new Usuario(
-			entity.getId(), entity.getUsername(),
-			entity.getPassword(), entity.getRole()
-		);
-	}
-	
-	private UsuarioEntity toEntity(Usuario usuario) {
-		return new UsuarioEntity(
-			usuario.getId(), usuario.getUsername(),
-			usuario.getPassword(), usuario.getRole()
-		);
-	}
+
+    private final JpaUsuarioRepository jpaUsuarioRepository;
+
+    @Override
+    public Optional<Usuario> buscarPorId(String id) {
+        return jpaUsuarioRepository.findById(id).map(PersistenceMapper::toDomain);
+    }
+
+    @Override
+    public Optional<Usuario> buscarPorLogin(String login) {
+        return jpaUsuarioRepository.findByLogin(login).map(PersistenceMapper::toDomain);
+    }
+
+    @Override
+    public void salvar(Usuario usuario) {
+        jpaUsuarioRepository.save(PersistenceMapper.toEntity(usuario));
+    }
+
+    @Override
+    public void deletar(String id) {
+        jpaUsuarioRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean existeLogin(String login) {
+        return jpaUsuarioRepository.findByLogin(login).isPresent();
+    }
 }
+

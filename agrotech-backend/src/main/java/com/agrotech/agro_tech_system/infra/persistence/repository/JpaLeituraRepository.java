@@ -5,7 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface JpaLeituraRepository extends JpaRepository<LeituraEntity, String> {
-	
+public interface JpaLeituraRepository extends JpaRepository<LeituraEntity, Long> {
     List<LeituraEntity> findBySensorId(String sensorId);
 }

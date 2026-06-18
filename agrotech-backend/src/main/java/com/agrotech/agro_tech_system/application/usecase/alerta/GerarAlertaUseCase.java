@@ -10,7 +10,6 @@ import com.agrotech.agro_tech_system.domain.enums.StatusAlerta;
 import com.agrotech.agro_tech_system.domain.models.Alerta;
 import com.agrotech.agro_tech_system.domain.models.Leitura;
 import com.agrotech.agro_tech_system.domain.models.Regra;
-import com.agrotech.agro_tech_system.domain.models.Sensor;
 import com.agrotech.agro_tech_system.domain.repository.AlertaRepository;
 
 

@@ -1,75 +1,63 @@
 package com.agrotech.agro_tech_system.infra.persistence.adapter;
 
-import java.util.List;
-import java.util.Objects;
-
-import org.springframework.stereotype.Component;
-
 import com.agrotech.agro_tech_system.domain.models.Leitura;
-import com.agrotech.agro_tech_system.domain.models.Sensor;
 import com.agrotech.agro_tech_system.domain.repository.LeituraRepository;
 import com.agrotech.agro_tech_system.infra.persistence.entity.LeituraEntity;
-import com.agrotech.agro_tech_system.infra.persistence.entity.SensorEntity;
 import com.agrotech.agro_tech_system.infra.persistence.repository.JpaLeituraRepository;
 import com.agrotech.agro_tech_system.infra.persistence.repository.JpaSensorRepository;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
 
-@Component
+import java.util.List;
+
+@Repository
 @RequiredArgsConstructor
 public class LeituraRepositoryAdapter implements LeituraRepository {
-	
-	private final JpaLeituraRepository jpa = null;
-	private final JpaSensorRepository sensorJpa = null;
-	
-	@Override
-	public Leitura salvar(Leitura leitura) {
-		return toDomain(jpa.save(toEntity(leitura)));
-	}
-	
-	@Override
-	public List<Leitura> buscarPorSensor(String sensorId) {
-		return jpa.findBySensorId(sensorId).stream().map(this::toDomain).toList();
-	}
-	
-	private Leitura toDomain(LeituraEntity entity) {
-		
-		SensorEntity se = sensorJpa.findById(
-			entity.getSensor().getId())
-				  .orElseThrow(() -> new RuntimeException("Sensor não encontrado no DB!"));
-		
-		Objects.requireNonNull(se.getNome(), "Sensor sem nome no DB: " + se.getId());
-					
-		var sensor = new Sensor(
-			se.getId(), se.getNome(),
-			se.getLocalizacao(),
-			se.isAtivo(), se.getTipo()
-		);
-		
-		return new Leitura(
-			entity.getId(), sensor,
-			entity.getValor(),
-			entity.getDataHora(),
-			entity.getLocalizacao()
-		);
-	}
-	
-	private LeituraEntity toEntity(Leitura d) {
-		var e = new LeituraEntity();
-		
-		e.setId(d.getId());
-		e.setValor(d.getValor());
-		e.setDataHora(d.getDataHora());
-		e.setLocalizacao(d.getLocalizacao());
-		
-		if (d.getSensor() == null || d.getSensor().getId() == null) {
-			throw new RuntimeException("Sensor não pode ser nulo na leitura!");
-		}
-		
-		var sensorRef = new SensorEntity();
-		sensorRef.setId(d.getSensor().getId());
-		e.setSensor(sensorRef);
-		
-		return e;
-	}
+
+    private final JpaLeituraRepository jpaLeituraRepository;
+    private final JpaSensorRepository jpaSensorRepository;
+
+    @Override
+    public Leitura salvar(Leitura leitura) {
+        var sensor = jpaSensorRepository.findById(leitura.getSensor().getId())
+                .orElseThrow(() -> new IllegalStateException("Sensor nao encontrado para persistir leitura"));
+
+        LeituraEntity entity = new LeituraEntity(
+                leitura.getId(),
+                sensor,
+                leitura.getValor(),
+                leitura.getDataHora(),
+                leitura.getLocalizacao()
+        );
+
+        LeituraEntity salva = jpaLeituraRepository.save(entity);
+        return new Leitura(
+                salva.getId(),
+                leitura.getSensor(),
+                salva.getValor(),
+                salva.getDataHora(),
+                salva.getLocalizacao()
+        );
+    }
+
+    @Override
+    public List<Leitura> buscarPorSensor(String sensorId) {
+        return jpaLeituraRepository.findBySensorId(sensorId)
+                .stream()
+                .map(entity -> new Leitura(
+                        entity.getId(),
+                        new com.agrotech.agro_tech_system.domain.models.Sensor(
+                                entity.getSensor().getId(),
+                                entity.getSensor().getNome(),
+                                entity.getSensor().getLocalizacao(),
+                                true,
+                                entity.getSensor().getTipo()
+                        ),
+                        entity.getValor(),
+                        entity.getDataHora(),
+                        entity.getLocalizacao()
+                ))
+                .toList();
+    }
 }
+

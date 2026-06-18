@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
+import io.swagger.v3.oas.annotations.Operation;
 import com.agrotech.agro_tech_system.api.dto.regra.RegraRequestDTO;
 import com.agrotech.agro_tech_system.api.dto.regra.RegraResponseDTO;
 import com.agrotech.agro_tech_system.application.usecase.regra.AtivarDesativarRegraUseCase;
@@ -24,17 +26,20 @@ public class RegraController {
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Void> criar(@RequestBody RegraRequestDTO dto) {
+    @Operation(operationId = "criarRegra")
+    public ResponseEntity<Void> criar(@Valid @RequestBody RegraRequestDTO dto) {
         cadastrarRegra.executar(dto);
         return ResponseEntity.status(201).build();
     }
 
     @GetMapping
+    @Operation(operationId = "listarRegras")
     public ResponseEntity<List<RegraResponseDTO>> listar() {
         return ResponseEntity.ok(listarRegras.executar());
     }
 
     @GetMapping("/{id}")
+    @Operation(operationId = "buscarRegraPorId")
     public ResponseEntity<RegraResponseDTO> buscarPorId(@PathVariable String id) {
         return ResponseEntity.ok(listarRegras.buscarPorId(id));
     }

@@ -12,7 +12,7 @@ import com.agrotech.agro_tech_system.application.usecase.leitura.RegistrarLeitur
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/leitura")
+@RequestMapping("/leituras")
 @RequiredArgsConstructor
 public class LeituraController {
 
