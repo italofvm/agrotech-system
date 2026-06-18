@@ -16,8 +16,6 @@ import java.util.List;
 @Setter
 
 @NoArgsConstructor
-@AllArgsConstructor
-@RequiredArgsConstructor
 @EqualsAndHashCode(of = "id")
 public class UsuarioEntity implements UserDetails {
 

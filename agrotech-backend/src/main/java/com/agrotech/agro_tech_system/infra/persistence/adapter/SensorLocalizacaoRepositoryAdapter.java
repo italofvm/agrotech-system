@@ -21,11 +21,6 @@ public class SensorLocalizacaoRepositoryAdapter implements SensorLocalizacaoRepo
 	private final JpaSensorLocalizacaoRepository jpa;
 	private final JpaSensorRepository sensorJpa;
 	
-	public SensorLocalizacaoRepositoryAdapter(JpaSensorLocalizacaoRepository jpa, JpaSensorRepository sensorJpa) {
-		this.jpa = jpa;
-		this.sensorJpa = sensorJpa;
-	}
-	
 	@Override
 	public SensorLocalizacao salvar(SensorLocalizacao d) {
 		return toDomain(jpa.save(toEntity(d)));
@@ -33,12 +28,12 @@ public class SensorLocalizacaoRepositoryAdapter implements SensorLocalizacaoRepo
 	
 	@Override
 	public Optional<SensorLocalizacao> buscarAtivaPorSensor(String sensorId){
-		return jpa.findFirstBySensor_IdDataInic(sensorId).map(this::toDomain);
+		return jpa.findFirstBySensor_IdAndDataFimIsNull(sensorId).map(this::toDomain);
 	}
 	
 	@Override
 	public List<SensorLocalizacao> buscarTodosPorSensor(String sensorId) {
-		return jpa.findAllBySensor_IdOrderDataInic(sensorId)
+		return jpa.findAllBySensor_IdOrderByDataInicioAsc(sensorId)
 			.stream().map(this::toDomain).toList();
 	}
 	
