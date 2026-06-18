@@ -15,11 +15,20 @@ import java.util.List;
 @Getter
 @Setter
 
+@NoArgsConstructor
 @AllArgsConstructor
+@RequiredArgsConstructor
 @EqualsAndHashCode(of = "id")
 public class UsuarioEntity implements UserDetails {
 
-    private static final long serialVersionUID = 1l;
+	public UsuarioEntity(String id, String username, String password, UserRole role) {
+		this.id = id;
+		login = username;
+		senha = password;
+		this.role = role;
+	}
+	
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -35,7 +44,7 @@ public class UsuarioEntity implements UserDetails {
     @Column(nullable = false)
     private UserRole role;
 
-    public Collection<? extends GrantedAuthority> getAuthorities() {
+	public Collection<? extends GrantedAuthority> getAuthorities() {
         if(this.role == UserRole.ADMIN) {
             return List.of(
                     new SimpleGrantedAuthority("ROLE_ADMIN"),
@@ -47,12 +56,20 @@ public class UsuarioEntity implements UserDetails {
             );
         }
     }
+    
+    public String getId() { return id; }
 
-    public UsuarioEntity(){}
-
-    public String getPassword(){return senha;}
-    public String getUsername(){return login;}
-    public boolean isAccountNonExpired(){return true;}
-    public boolean isAccountNonLocked(){return true;}
-    public boolean isEnabled(){return true;}
+    public String getPassword() { return senha; }
+    
+    public String getUsername() { return login; }
+    
+    public UserRole getRole() { return role; }
+    
+    public boolean isAccountNonExpired() { return true; }
+    
+    public boolean isAccountNonLocked() { return true; }
+    
+    public boolean isCredentialsNonExpired() { return true; }
+    
+    public boolean isEnabled() { return true; }
 }

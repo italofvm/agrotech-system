@@ -16,8 +16,20 @@ import java.util.List;
 @EqualsAndHashCode(of = "id")
 public class SensorEntity {
 
-
-    @Id
+	public SensorEntity() {	}
+	
+	public SensorEntity(String id, String nome, String localizacao, boolean ativo, 
+						TipoSensor tipo, AreaEntity area, List<LeituraEntity> leituras) {
+		this.id = id;
+		this.nome = nome;
+		this.localizacao = localizacao;
+		isAtivo = ativo;
+		this.tipo = tipo;
+		this.area = area;
+		this.leituras = leituras;
+	}
+	
+	@Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
@@ -26,6 +38,8 @@ public class SensorEntity {
 
     private String localizacao;
 
+    private boolean isAtivo;
+    
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private TipoSensor tipo;
@@ -35,9 +49,22 @@ public class SensorEntity {
     private AreaEntity area;
 
     @OneToMany(
-            mappedBy = "sensor",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
+        mappedBy = "sensor",
+        cascade = CascadeType.ALL,
+        orphanRemoval = true
     )
+    
     private List<LeituraEntity> leituras;
+    
+    public void setId(String id) { this.id = id; }
+        
+	public String getId() { return id; }
+    
+    public String getNome() { return nome; }
+    
+    public String getLocalizacao() { return localizacao; }
+    
+    public TipoSensor getTipo() { return tipo; }
+    
+    public boolean isAtivo() { return isAtivo; }
 }
