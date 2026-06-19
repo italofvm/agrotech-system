@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -14,9 +14,9 @@ import { SensorService } from '../../../services/sensor.service';
 })
 
 export class SensorFormComponent {
-  private fb = Inject(FormBuilder);
-  private sensorService = Inject(SensorService);
-  private router = Inject(Router);
+  private fb = inject(FormBuilder);
+  private sensorService = inject(SensorService);
+  private router = inject(Router);
 
   public sensorForm = this.fb.group({
     nome: ['', [Validators.required, Validators.minLength(3)]],
@@ -35,7 +35,10 @@ export class SensorFormComponent {
       }
 
       this.sensorService.salvar(novoSensor as any).subscribe({
-        next: () => this.router.navigate(['/sensores']),
+        next: () => {
+          this.router.navigate(['/sensores']);
+          console.log('Sensor salvo. Token antes de navegar:', localStorage.getItem('token'));
+        },
         error: (err: any) => console.error('Erro ao salvar sensor:', err)
       });
     }

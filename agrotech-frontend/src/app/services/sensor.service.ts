@@ -13,7 +13,7 @@ export class SensorService {
   constructor() { }
 
   buscarTodos(): Observable<SensorModel[]> {
-    return this.http.get<SensorModel[]>(this.apiURL);
+    return this.http.get<SensorModel[]>(`${this.apiURL}`);
   }
 
   buscarPorId(id: string): Observable<SensorModel> {
@@ -21,7 +21,7 @@ export class SensorService {
   }
 
   salvar(sensor: Partial<SensorModel>) {
-    return this.http.post<void>(this.apiURL, sensor);
+    return this.http.post<void>(`${this.apiURL}`, sensor);
   }
 
   atualizarNome(id: string, nome: string): Observable<void> {

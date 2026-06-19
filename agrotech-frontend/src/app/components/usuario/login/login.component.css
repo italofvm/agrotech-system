@@ -1,0 +1,23 @@
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+  
+}
+
+.login-card {
+  width: 100%;
+  max-width: 400px;
+  padding: 24px;
+}
+
+.full-width {
+  width: 100%;
+  margin-top: 12px;
+}
+
+mat-card-title {
+  font-weight: bold;
+  color: #2e7d32;
+}

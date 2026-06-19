@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { MaterialModule } from '../../../shared/material/material.module';
@@ -18,9 +18,9 @@ import { UserRoleModel } from '../../../models/user-role.model';
 export class SensorListComponent implements OnInit {
   tituloComp: string = 'Rede de Sensores';
 
-  private sensorService = new SensorService();
-  private roteador = Inject(Router);
-  private usuarioService = new UsuarioService();
+  private sensorService = inject(SensorService);
+  private roteador = inject(Router);
+  private usuarioService = inject(UsuarioService);
 
   listaDeSensores = signal<SensorModel[]>([]);
   estaCarregando = signal<boolean>(false);
@@ -74,10 +74,10 @@ export class SensorListComponent implements OnInit {
       return;
     }
 
-    this.roteador.navigate(['/sensores/cadastro']);
+    this.roteador.navigate(['/configuracoes/novo-sensor']);
   }
 
   verDetalhes(id: string): void {
-    this.roteador.navigate(['/sensores', id]);
+    this.roteador.navigate(['/sensores/detalhes', id]);
   }
 }

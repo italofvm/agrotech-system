@@ -35,7 +35,7 @@ public class SensorController {
     private final DeletarSensores deletarSensor;
 
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Operation(operationId = "criarSensor")
     public ResponseEntity<Void> criar(@Valid @RequestBody CriarSensorDTO criarSensor) {
         cadastrarSensor.executar(criarSensor);

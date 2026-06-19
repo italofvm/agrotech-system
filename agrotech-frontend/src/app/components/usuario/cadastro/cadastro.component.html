@@ -1,1 +1,82 @@
-<p>cadastro works!</p>
+<div class="cadastro-wrapper">
+  <mat-card class="cadastro-card">
+    <mat-card-header>
+      <mat-card-title>{{ tituloComp }}</mat-card-title>
+      <mat-card-subtitle>{{ subtituloComp }}</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="cadastroFormulario" (ngSubmit)="aoCadastrar()">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Login</mat-label>
+          <input
+            type="email"
+            placeholder="Insira seu email"
+            matInput
+            formControlName="login"
+          />
+
+          @if (cadastroFormulario.get('login')?.hasError('required')) {
+            <mat-error>O login é obrigatório</mat-error>
+          }
+
+          @if (cadastroFormulario.get('login')?.hasError('email')) {
+            <mat-error>Informe um e-mail válido</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Senha</mat-label>
+          <input
+            type="password"
+            placeholder="Insira sua senha"
+            matInput
+            formControlName="senha"
+          />
+
+          @if (cadastroFormulario.get('senha')?.hasError('required')) {
+            <mat-error>A senha é obrigatória</mat-error>
+          }
+
+          @if (cadastroFormulario.get('senha')?.hasError('minlength')) {
+            <mat-error>A senha deve ter no mínimo 6 caracteres</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Perfil/Role</mat-label>
+          <mat-select formControlName="role">
+            @for (perfil of perfisDisponiveis; track perfil) {
+              <mat-option [value]="perfil">
+                {{ perfil }}
+              </mat-option>
+            }
+          </mat-select>
+
+          @if (cadastroFormulario.get('role')?.hasError('required')) {
+            <mat-error>Selecione um perfil</mat-error>
+          }
+        </mat-form-field>
+
+        <div class="button-group">
+          <button
+            mat-button
+            type="button"
+            (click)="cancelar()"
+          >
+            CANCELAR
+          </button>
+
+          <button
+            mat-raised-button
+            color="accent"
+            type="submit"
+            [disabled]="cadastroFormulario.invalid"
+          >
+            FINALIZAR CADASTRO
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

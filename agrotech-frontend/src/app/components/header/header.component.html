@@ -1,5 +1,8 @@
 <mat-toolbar color="primary" class="header-toolbar mat-elevation-z6">
-  <div class="logo-section" routerLink="/telemetria/dashboard" style="cursor: pointer;">
+  <div
+    class="logo-section"
+    [routerLink]="estaLogado() ? '/sensores' : '/login'"
+    style="cursor: pointer;">    
     <mat-icon class="logo-icon">agriculture</mat-icon>
     <span class="titulo-sistema">Agro Telemetria</span>
   </div>

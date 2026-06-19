@@ -19,14 +19,19 @@ import { UserRoleModel } from '../../models/user-role.model';
 })
 
 export class HeaderComponent {
-  private servicoUsuario = new UsuarioService();
+  private servicoUsuario = inject(UsuarioService);
   private roteador = inject(Router);
 
-  public estaLogado = computed(() => this.servicoUsuario.estaLogado());
+  estaLogado(): boolean {
+    return this.servicoUsuario.estaLogado();
+  }
 
-  public ehAdmin = computed(() => 
-    this.servicoUsuario.estaLogado() &&
-    this.servicoUsuario.obterRole() === UserRoleModel.ADMIN);
+  ehAdmin(): boolean {
+    return (
+      this.servicoUsuario.estaLogado() &&
+      this.servicoUsuario.obterRole() === UserRoleModel.ADMIN
+    );
+  }
 
   sair(): void {
     this.servicoUsuario.logout();

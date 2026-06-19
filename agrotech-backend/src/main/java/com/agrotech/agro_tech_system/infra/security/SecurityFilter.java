@@ -28,22 +28,24 @@ public class SecurityFilter extends OncePerRequestFilter{
 			HttpServletResponse response, 
 			FilterChain filterChain)	
 	throws ServletException, IOException {
-		
 		String token = recuperarToken(request);
 		
 		if(token != null) {			
 			String subject = tokenService.getSubject(token);
-			var login = repository.findByLogin(subject);
 			
+			var login = repository.findByLogin(subject);
+						
 			if(login.isPresent()) {
 				var usuario = login.get();
+			    
 				var authentication = new UsernamePasswordAuthenticationToken(
-						usuario,
-						null,
-						usuario.getAuthorities()
-						);
+					usuario, null, usuario.getAuthorities());
 				
-			SecurityContextHolder.getContext().setAuthentication(authentication);
+				SecurityContextHolder.getContext()
+					.setAuthentication(authentication);
+				
+			    System.out.println("AUTH NO CONTEXTO: " + SecurityContextHolder.getContext().getAuthentication());
+
 			}
 		}
 	
