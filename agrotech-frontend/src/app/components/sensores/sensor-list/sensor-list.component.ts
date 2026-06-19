@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, Inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { MaterialModule } from '../../material/material.module';
-import { SensorService } from '../../services/sensor.service';
-import { SensorModel } from '../../models/sensor.model';
-import { UsuarioService } from '../../services/usuario.service';
-import { UserRoleModel } from '../../models/user-role.model';
+import { MaterialModule } from '../../../shared/material/material.module';
+import { SensorService } from '../../../services/sensor.service';
+import { SensorModel } from '../../../models/sensor.model';
+import { UsuarioService } from '../../../services/usuario.service';
+import { UserRoleModel } from '../../../models/user-role.model';
 
 @Component({
   selector: 'app-sensor-list',
@@ -19,7 +19,7 @@ export class SensorListComponent implements OnInit {
   tituloComp: string = 'Rede de Sensores';
 
   private sensorService = new SensorService();
-  private roteador = inject(Router);
+  private roteador = Inject(Router);
   private usuarioService = new UsuarioService();
 
   listaDeSensores = signal<SensorModel[]>([]);
@@ -64,7 +64,7 @@ export class SensorListComponent implements OnInit {
 
     this.sensorService.atualizarLocalizacao(sensor.id, novaLoc).subscribe({
       next: () =>  this.carregarDadosSensores(),
-      error: (err) => console.error('Erro ao atualizar localização:', err)
+      error: (err: any) => console.error('Erro ao atualizar localização:', err)
     });
   }
 

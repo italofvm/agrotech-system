@@ -1,1 +1,65 @@
 <p>dashboard works!</p>
+<p>dashboard works!</p>
+<div class="dashboard-wrapper">
+  <div class="header-section">
+    <h1>Monitoramento de Campo</h1>
+    <p>Dados consolidados da rede de sensores</p>
+    <button mat-stroked-button color="primary" (click)="carregarDados()">
+      <mat-icon>refresh</mat-icon> ATUALIZAR
+    </button>
+  </div>
+
+  @if (carregando()) {
+    <div class="loading-state">
+      <mat-spinner diameter="50"></mat-spinner>
+      <p>Sincronizando telemetria...</p>
+    </div>
+  } @else {
+    <div class="sensor-grid">
+      @for (sensor of listaSensoresComLeituras(); track sensor.id) {
+        <mat-card class="sensor-card">
+          <mat-card-header>
+            <mat-icon mat-card-avatar color="accent">sensors</mat-icon>
+            <mat-card-title>{{ sensor.nome }}</mat-card-title>
+            <mat-card-subtitle>
+              <mat-icon inline>place</mat-icon> Atual: {{ sensor.localizacaoAtual || 'Não definida' }}
+            </mat-card-subtitle>
+          </mat-card-header>
+
+          <mat-card-content>
+            <h4 class="table-title">Histórico de Medições</h4>
+            
+            <div class="table-container">
+              <table class="telemetria-table">
+                <thead>
+                  <tr>
+                    <th>Data/Hora</th>
+                    <th>Valor</th>
+                    <th>Local na Coleta</th> </tr>
+                </thead>
+                <tbody>
+                  @for (leitura of sensor.leituras; track leitura.id) {
+                    <tr>
+                      <td>{{ leitura.dataHora | date:'dd/MM HH:mm' }}</td>
+                      <td class="valor-destaque">{{ leitura.valor }}</td>
+                      <td><small>{{ leitura.localizacao }}</small></td>
+                    </tr>
+                  } @empty {
+                    <tr>
+                      <td colspan="3" class="no-data">Nenhuma leitura processada.</td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      } @empty {
+        <div class="empty-dashboard">
+          <mat-icon>cloud_off</mat-icon>
+          <p>Nenhum dado disponível no momento.</p>
+        </div>
+      }
+    </div>
+  }
+</div>

@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../../../shared/material/material.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SensorService } from '../../../services/sensor.service';
 import { LeituraService } from '../../../services/leitura.service';
@@ -15,10 +15,10 @@ import { SensorModel } from '../../../models/sensor.model';
 })
 
 export class SensorLeituraFormComponent implements OnInit {
-  private fb = inject(FormBuilder);
+  private fb = Inject(FormBuilder);
   private sensorService = new SensorService();
   private leituraService = new LeituraService();
-  private snackBar = inject(MatSnackBar);
+  private snackBar = Inject(MatSnackBar);
 
   sensores = signal<SensorModel[]>([]);
 

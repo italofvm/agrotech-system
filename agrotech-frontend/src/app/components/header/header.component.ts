@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { MaterialModule } from '../../material/material.module';
+import { MaterialModule } from '../../shared/material/material.module';
 import { UsuarioService } from '../../services/usuario.service';
 import { UserRoleModel } from '../../models/user-role.model';
 
@@ -15,7 +15,7 @@ import { UserRoleModel } from '../../models/user-role.model';
     MaterialModule
   ],
   templateUrl: './header.component.html',
-  styleUrls: './header.component.css'
+  styleUrl: './header.component.css'
 })
 
 export class HeaderComponent {
