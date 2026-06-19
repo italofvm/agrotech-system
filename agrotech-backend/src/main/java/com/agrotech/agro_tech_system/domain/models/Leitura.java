@@ -24,7 +24,7 @@ public class Leitura {
         }
 
         if (valor == null) {
-            throw new ValidacaoException("Valor da leitjá falei quura é obrigatório");
+            throw new ValidacaoException("Valor da leitura é obrigatório");
         }
 
         if (dataHora == null) {

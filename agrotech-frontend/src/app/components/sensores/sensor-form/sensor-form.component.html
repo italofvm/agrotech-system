@@ -1,1 +1,53 @@
-<p>sensor-form works!</p>
+<div class="cadastro-sensor-wrapper">
+  <mat-card class="sensor-card">
+    <mat-card-header>
+      <mat-icon mat-card-avatar color="primary">add_to_photos</mat-icon>
+      <mat-card-title>Novo Dispositivo</mat-card-title>
+      <mat-card-subtitle>Provisionamento de hardware na rede de telemetria</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="sensorForm" (ngSubmit)="aoSalvar()">
+        
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Identificador do Sensor (Nome)</mat-label>
+          <input matInput formControlName="nome" placeholder="Ex: Higrômetro Estufa 04">
+          @if (sensorForm.get('nome')?.invalid && sensorForm.get('nome')?.touched) {
+            <mat-error>O nome deve ter pelo menos 3 caracteres.</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Tipo de Grandeza Monitorada</mat-label>
+            <mat-select formControlName="tipo">
+              <mat-option value="SOLO">Umidade do Solo</mat-option>
+              <mat-option value="CLIMA">Clima (Temperatura/UR)</mat-option>
+              <mat-option value="PH">Nível de pH</mat-option>
+              <mat-option value="NIVEL_TANQUE">Nível de Tanque</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Localização / Coordenadas</mat-label>
+          <input matInput formControlName="localizacao" placeholder="Ex: Setor Sul - Lote B">
+        </mat-form-field>
+
+        <div class="toggle-section">
+          <mat-slide-toggle formControlName="ativo" color="primary">
+            Habilitar transmissão de dados imediata
+          </mat-slide-toggle>
+        </div>
+
+        <div class="button-actions">
+          <button mat-button type="button" (click)="cancelar()">
+            DESCARTAR
+          </button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="sensorForm.invalid">
+            FINALIZAR REGISTRO
+          </button>
+        </div>
+
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

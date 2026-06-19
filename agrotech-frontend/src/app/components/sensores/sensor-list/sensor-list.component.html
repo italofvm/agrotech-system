@@ -1,1 +1,103 @@
-<p>sensor-list works!</p>
+<div class="sensor-list-container">
+
+    <mat-toolbar color="accent" class="toolbar-header mat-elevation-z4">
+        <mat-icon>sensors</mat-icon>
+        <span>{{ tituloComp }}</span>
+        <span class="espacador"></span>
+            @if (ehAdmin()) {
+                <button
+                mat-raised-button
+                color="primary"
+                (click)="navegarParaCadastro()"
+                >    
+                <mat-icon>add</mat-icon>
+                NOVO SENSOR
+                </button>
+            }
+    </mat-toolbar>
+
+    <div class="table-wrapper">
+        @if(estaCarregando()){
+                <div class="loading-overlay">
+                    <mat-spinner diameter="50"></mat-spinner>
+                    <p>Sincronizando com os sensores em campo...</p>
+                </div>
+            }@else{
+                <table mat-table [dataSource]="listaDeSensores()" class="mat-elevation-z8">
+
+                    <ng-container matColumnDef="nome">
+                        <th mat-header-cell *matHeaderCellDef>Identificador</th>
+                        <td mat-cell *matCellDef="let sensor">{{ sensor.nome }}</td>
+                    </ng-container>
+
+                     <ng-container matColumnDef="tipo">
+                        <th mat-header-cell *matHeaderCellDef>Grandeza</th>
+                        <td mat-cell *matCellDef="let sensor">
+                            <mat-icon class="tipo-icon">assessment</mat-icon>
+                            {{ sensor.tipo }}
+                        </td>
+                    </ng-container>
+
+                   <ng-container matColumnDef="localizacao">
+                        <th mat-header-cell *matHeaderCellDef>Localização</th>
+                        <td mat-cell *matCellDef="let sensor"> 
+                            <mat-icon class="loc-icon" 
+                                    (click)="alterarLocalizacao(sensor)" 
+                                    style="cursor: pointer;" 
+                                    matTooltip="Clique para mover o sensor">
+                            location_on
+                            </mat-icon>
+                             {{ sensor.localizacao }} 
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="status">
+                        <th mat-header-cell *matHeaderCellDef>Estado</th>
+                        <td mat-cell *matCellDef="let sensor">
+                           <span class="status-badge"                             
+                            [class.ativo] = "sensor.ativo" 
+                            [class.inativo] = "!sensor.ativo"
+                           >
+                            {{ sensor.ativo ? 'ONLINE' : 'OFFLINE' }}
+                           </span>                                  
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="acoes">
+                        <th mat-header-cell *matHeaderCellDef>Ações</th>
+                        <td mat-cell *matCellDef="let sensor">
+
+                           <button
+                                mat-icon-button 
+                                color="primary"
+                                (click) = "verDetalhes(sensor.id)"
+                                matTooltip="Ver telemetria e histórico"
+                           >
+                                <mat-icon>insights</mat-icon>
+                           </button>
+
+                           <button
+                                mat-icon-button
+                                color="warn"
+                                (click) = "excluirSensor(sensor.id)"
+                                matTooltip = "Removendo sensor"
+                           >
+                                <mat-icon>delete_forever</mat-icon>
+                           </button>
+                        </td>
+                    </ng-container>
+                    <tr
+                        mat-header-row *matHeaderRowDef = "colunasTabela"
+                    ></tr><tr
+                        mat-row *matRowDef="let row; columns: colunasTabela;"
+                    ></tr></table> 
+
+                 @if(listaDeSensores().length === 0){
+                    <div class="empty-state">
+                        <mat-icon>cloud_off</mat-icon>
+                        <p>Nenhum sensor detectado na área de cobertura</p>
+                    </div>
+                 }
+            }
+    </div>
+</div>

@@ -10,15 +10,10 @@ import { SensorLeituraFormComponent } from './components/sensores/sensor-leitura
 import { SensorFormComponent } from './components/sensores/sensor-form/sensor-form.component';
 
 export const routes: Routes = [
-  //Rota padrão da aplicação
-
   { path: '', redirectTo: 'login', pathMatch: 'full' },
-
-  // Rotas públicas
   { path: 'cadastro', component: CadastroComponent },
   { path: 'login', component: LoginComponent },
 
-  // Rotas restritas para usuario Logado
   {
     path: 'sensores',
     canActivate: [authGuard],
@@ -37,7 +32,6 @@ export const routes: Routes = [
     ],
   },
 
-  // Rotas restritas (Nivel: APenas ADMIN)
   {
     path: 'configuracoes',
     canActivate: [authGuard, adminGuard],
@@ -47,7 +41,6 @@ export const routes: Routes = [
     ],
   },
 
-  // Rotas de fallback para evitar erros de navegação
   {
     path: '**',
     redirectTo: 'login',

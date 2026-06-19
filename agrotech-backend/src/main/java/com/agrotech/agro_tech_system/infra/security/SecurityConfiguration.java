@@ -21,51 +21,32 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-// Classe de configuração de segurança
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity // <--- ADICIONANDO NOVA ANNOTATION PARA QUE TUDO 
-//OCORRA EM MODO "SEGURO"
+@EnableMethodSecurity 
 @RequiredArgsConstructor
 public class SecurityConfiguration {
 
     private final SecurityFilter filter;
        
-    // Define regras de segurança
-    // dentro de uma classe anotada com @Configuration, não é necessário que 
-    // os métodos @Bean sejam public
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-        		// *****ATIVANDO O CORS AQUI
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                .csrf(csrf -> csrf.disable()) // Mantém desativado para API
-                // CSRF: Cross-Site-Request Forgery
-                .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                // a instrução acima determina que: não estamos "guardando memoria" de quem esta
-                // "visitando/usando" a aplicação - portanto, cada requisição é feita como se fosse uma
-                // "folha em branco"
-
-                .authorizeHttpRequests(auth -> auth
-                        // 1. Liberação do Swagger (Adicionei o /swagger-ui.html e /swagger-ui/index.html)
-                        .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
-
-                        // 2. Liberação do H2 Console (Obrigatório para ambiente dev)
-                        .requestMatchers("/h2-console/**").permitAll()
-
-                        .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                        .requestMatchers("/cadastro/**").permitAll()
-                        .anyRequest().authenticated()
-                )
-                // 3. Importante: O H2 usa frames. O Spring bloqueia por padrão. 
-                // Esta linha permite que o H2 abra no navegador:
-                .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()))
-                
-                .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)
-                .build();
+	        .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+	        .csrf(csrf -> csrf.disable())
+	        .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+	        .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                .requestMatchers("/h2-console/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+                .requestMatchers("/cadastro/**").permitAll()
+                .anyRequest().authenticated()
+	        )	        
+	        .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()))
+	        .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)
+	        .build();
     }
 
- // 2. ADICIONANDO O BEAN DE CONFIGURAÇÃO DE CORS
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
@@ -77,6 +58,7 @@ public class SecurityConfiguration {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
+    
     @Bean
     AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
@@ -95,7 +77,6 @@ public class SecurityConfiguration {
         return authProvider;
     }
     
-    // Encoder de senha
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

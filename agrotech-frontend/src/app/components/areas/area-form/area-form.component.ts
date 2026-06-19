@@ -6,6 +6,5 @@ import { Component } from '@angular/core';
   templateUrl: './area-form.component.html',
   styleUrl: './area-form.component.css'
 })
-export class AreaFormComponent {
 
-}
+export class AreaFormComponent { }

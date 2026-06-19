@@ -9,18 +9,15 @@ import com.agrotech.agro_tech_system.infra.persistence.repository.JpaUsuarioRepo
 
 import lombok.RequiredArgsConstructor;
 
-	@Service
-	@RequiredArgsConstructor
-	public class AutenticacaoService  implements UserDetailsService{
+@Service
+@RequiredArgsConstructor
+public class AutenticacaoService  implements UserDetailsService{
 
-		//1ª Declarar a DI necessaria para o procedimento de Autenticação
-		private final JpaUsuarioRepository jpa;
-		
-		@Override
-		public UserDetails loadUserByUsername(String username) throws  UsernameNotFoundException{
-			return jpa.findByLogin(username)
-					.orElseThrow(() -> new UsernameNotFoundException("Usuario não encontrado: " + username));
-			
-		}
+	private final JpaUsuarioRepository jpa;
+	
+	@Override
+	public UserDetails loadUserByUsername(String username) throws  UsernameNotFoundException{
+		return jpa.findByLogin(username)
+				.orElseThrow(() -> new UsernameNotFoundException("Usuario não encontrado: " + username));		
 	}
-
+}

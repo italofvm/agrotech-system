@@ -5,16 +5,11 @@ import { jwtDecode } from 'jwt-decode';
 
 import { UsuarioModel } from '../models/usuario.model';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class UsuarioService {
   private http = inject(HttpClient);
-
   private readonly apiURL = 'http://localhost:8080';
-
   private _estaLogado = signal<boolean>(this.verificarToken());
-
   public estaLogado = computed(() => this._estaLogado());
 
   constructor() {}
@@ -24,14 +19,13 @@ export class UsuarioService {
   }
 
   login(credenciais: Partial<UsuarioModel>): Observable<{ token: string }> {
-    return this.http
-      .post<{ token: string }>(`${this.apiURL}/auth/login`, credenciais)
+    return this.http.post<{ token: string }>(`${this.apiURL}/auth/login`, credenciais)
       .pipe(
-        tap((resposta) => {
+        tap(resposta => {
           localStorage.setItem('token', resposta.token);
 
           this._estaLogado.set(true);
-        }),
+        })
       );
   }
 
@@ -45,9 +39,8 @@ export class UsuarioService {
 
   obterRole(): string | null {
     const token = this.obterToken();
-    if (!token) {
-      return null;
-    }
+    if (!token) return null;
+    
     const decode: any = jwtDecode(token);
 
     return decode.roles || null;

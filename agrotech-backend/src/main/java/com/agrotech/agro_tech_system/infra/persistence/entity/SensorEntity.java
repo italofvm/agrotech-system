@@ -43,15 +43,5 @@ public class SensorEntity {
     
     private List<LeituraEntity> leituras;
     
-    public void setId(String id) { this.id = id; }
-        
-	public String getId() { return id; }
-    
-    public String getNome() { return nome; }
-    
-    public String getLocalizacao() { return localizacao; }
-    
-    public TipoSensor getTipo() { return tipo; }
-    
     public boolean isAtivo() { return isAtivo; }
 }

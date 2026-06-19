@@ -5,13 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public record CriarSensorDTO(
-        @NotBlank
-        String nome,
-
-        @NotNull
-        TipoSensor tipo,
-
-        @NotBlank
-        String localizacao
-) {
-}
+    @NotBlank String nome,
+    @NotNull TipoSensor tipo,
+    @NotBlank String localizacao
+) { }

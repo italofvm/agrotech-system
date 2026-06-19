@@ -11,7 +11,7 @@ export interface SensorLocalizacao {
   id: string;
   localizacao: string;
   dataInicio: string;
-  dataFim: string;
+  dataFim?: string;
 }
 
 export interface SensorModel {
@@ -20,5 +20,6 @@ export interface SensorModel {
   localizacao: string;
   tipo: TipoSensor;
   ativo: boolean;
-  leituras: LeituraModel[];
+  historico?: SensorLocalizacao[];
+  leituras?: LeituraModel[];
 }

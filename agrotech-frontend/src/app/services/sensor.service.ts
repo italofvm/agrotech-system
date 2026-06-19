@@ -10,7 +10,7 @@ export class SensorService {
   private http = inject(HttpClient);
   private readonly apiURL = 'http://localhost:8080/sensores';
 
-  constructor() {}
+  constructor() { }
 
   buscarTodos(): Observable<SensorModel[]> {
     return this.http.get<SensorModel[]>(this.apiURL);

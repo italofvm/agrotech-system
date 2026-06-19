@@ -14,7 +14,7 @@ export class LeituraService {
   private readonly apiURLLeituras: string =
     'http://localhost:8080/api/leituras';
 
-  constructor() {}
+  constructor() { }
 
   obterDashboardCompleto(): Observable<SensorComLeituras[]> {
     return this.http.get<SensorComLeituras[]>(`${this.apiURL}/com-leituras`);

@@ -23,6 +23,7 @@ public class AtualizarSensorUseCase {
                 sensor.isAtivo(),
                 sensor.getTipo()
         );
+        
         sensorRepository.salvar(atualizado);
     }
 }

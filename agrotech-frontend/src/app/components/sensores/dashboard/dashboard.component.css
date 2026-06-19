@@ -1,0 +1,74 @@
+.dashboard-wrapper {
+  padding: 24px;
+}
+
+.header-section {
+  margin-bottom: 32px;
+  border-left: 5px solid #2e7d32;
+  padding-left: 15px;
+}
+
+.sensor-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+.sensor-card {
+  border-top: 4px solid #3f51b5;
+}
+
+.table-title {
+  margin-top: 16px;
+  color: #666;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+}
+
+.table-container {
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #eee;
+  border-radius: 4px;
+}
+
+.telemetria-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.telemetria-table th {
+  text-align: left;
+  background: #fafafa;
+  padding: 8px;
+  font-size: 0.8rem;
+}
+
+.telemetria-table td {
+  padding: 8px;
+  border-top: 1px solid #eee;
+  font-size: 0.85rem;
+}
+
+.valor-destaque {
+  font-weight: bold;
+  color: #2e7d32;
+}
+
+.loading-state, .empty-dashboard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 100px;
+  color: #999;
+}
+.telemetria-table th, .telemetria-table td {
+  padding: 8px;
+  text-align: left;
+  font-size: 0.85rem;
+}
+
+small {
+  color: #666;
+  font-style: italic;
+}

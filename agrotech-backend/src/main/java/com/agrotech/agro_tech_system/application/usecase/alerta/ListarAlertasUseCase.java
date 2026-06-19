@@ -31,13 +31,13 @@ public class ListarAlertasUseCase {
 
     private AlertaResponseDTO mapToResponse(Alerta alerta){
         return new AlertaResponseDTO(
-          alerta.getId(),
-          alerta.getStatus(),
-          alerta.getDataHora(),
-          alerta.getLeitura().getValor(),
-          alerta.getRegra().getTipoSensor().name(),
-          alerta.getRegra().getOperador().name(),
-          alerta.getRegra().getValor()
+			alerta.getId(),
+			alerta.getStatus(),
+			alerta.getDataHora(),
+			alerta.getLeitura().getValor(),
+			alerta.getRegra().getTipoSensor().name(),
+			alerta.getRegra().getOperador().name(),
+			alerta.getRegra().getValor()
         );
     }
 }

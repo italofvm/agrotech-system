@@ -7,11 +7,8 @@ import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 public record LeituraRequestDTO(
-        @NotBlank String sensorId,
-        @NotNull Double valor,
-
-        @NotNull
-        @JsonFormat(shape = JsonFormat.Shape.STRING)
-        LocalDateTime dataHora
-) {
-}
+    @NotBlank String sensorId,
+    @NotNull Double valor,        
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
+    @NotNull LocalDateTime dataHora
+) { }

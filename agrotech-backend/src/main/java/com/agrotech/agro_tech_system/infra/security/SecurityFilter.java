@@ -22,47 +22,42 @@ public class SecurityFilter extends OncePerRequestFilter{
 	private final TokenService tokenService;
 	private final JpaUsuarioRepository repository;
 	
-	
 	@Override
 	protected void doFilterInternal(
 			HttpServletRequest request, 
 			HttpServletResponse response, 
-			FilterChain filterChain)
-	
-			throws ServletException, IOException {
+			FilterChain filterChain)	
+	throws ServletException, IOException {
 		
 		String token = recuperarToken(request);
-		if(token != null) {
-			
-		String subject = tokenService.getSubject(token);
-		var login = repository.findByLogin(subject);
 		
-		if(login.isPresent()) {
-			var usuario = login.get();
-			var authentication = new UsernamePasswordAuthenticationToken(
-					usuario,
-					null,
-					usuario.getAuthorities()
-					);
+		if(token != null) {			
+			String subject = tokenService.getSubject(token);
+			var login = repository.findByLogin(subject);
 			
-			SecurityContextHolder.getContext()
-			    .setAuthentication(authentication);
+			if(login.isPresent()) {
+				var usuario = login.get();
+				var authentication = new UsernamePasswordAuthenticationToken(
+						usuario,
+						null,
+						usuario.getAuthorities()
+						);
+				
+			SecurityContextHolder.getContext().setAuthentication(authentication);
+			}
 		}
-	  }
+	
 		filterChain.doFilter(request, response);
-		
 	}
 	
 	private String recuperarToken(HttpServletRequest request) {
-	//	1ª buscar o header/cabeçalho da requisição - Authorization
-		String authorizationHeader = request.getHeader("Authorization");
 		
-	//  2ªse o var (authorizationHeader) estiver vazia ou começar com Bearer vamos retornar null	
+		String authorizationHeader = request.getHeader("Authorization");
+			
 		if(authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
 			return null;
 		}
 		
-	//  3ª Caso contrario, romever a string Bearer e ficar somento com o codigo, que na vdd é o token gerado	
 		return authorizationHeader.substring(7);
 	}
 

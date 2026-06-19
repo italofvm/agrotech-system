@@ -1,6 +1,5 @@
 package com.agrotech.agro_tech_system.application.usecase.alerta;
 
-
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -11,7 +10,6 @@ import com.agrotech.agro_tech_system.domain.models.Alerta;
 import com.agrotech.agro_tech_system.domain.models.Leitura;
 import com.agrotech.agro_tech_system.domain.models.Regra;
 import com.agrotech.agro_tech_system.domain.repository.AlertaRepository;
-
 
 @Service
 public class GerarAlertaUseCase {
@@ -25,7 +23,7 @@ public class GerarAlertaUseCase {
     public void executar(Leitura leitura, Regra regra) {
 
         Alerta alerta = new Alerta(
-                UUID.randomUUID().toString(), // id
+                UUID.randomUUID().toString(),
                 leitura,
                 regra,
                 StatusAlerta.ATIVO,
