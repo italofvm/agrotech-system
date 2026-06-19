@@ -1,0 +1,31 @@
+.regra-wrapper {
+  padding: 24px;
+}
+
+.regra-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.regra-header h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--c-primary-800);
+  margin: 0;
+}
+
+table {
+  width: 100%;
+}
+
+.status-ativo {
+  color: var(--c-success);
+  font-weight: bold;
+}
+
+.status-inativo {
+  color: var(--c-danger);
+  font-weight: bold;
+}

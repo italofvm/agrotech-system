@@ -1,7 +1,6 @@
 package com.agrotech.agro_tech_system.domain.service;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -17,11 +16,11 @@ public class AlertaService {
     public Alerta gerar(Leitura leitura, Regra regra) {
 
         Alerta alerta = new Alerta(
-                UUID.randomUUID().toString(), // id
-                leitura,                      // leitura
-                regra,                        // regra
-                StatusAlerta.ATIVO,           // status
-                LocalDateTime.now()           // dataHora
+                null,                // id gerado pelo JPA (evita merge() no Hibernate 7)
+                leitura,
+                regra,
+                StatusAlerta.ATIVO,
+                LocalDateTime.now()
         );
 
         return alerta;

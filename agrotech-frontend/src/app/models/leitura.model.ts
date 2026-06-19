@@ -12,3 +12,12 @@ export interface SensorComLeituras {
   leituras: LeituraModel[];
   historico?: any[];
 }
+
+export interface LeituraComSensorModel {
+  id: number;
+  sensorId: string;
+  sensorNome: string;
+  valor: number;
+  dataHora: string;
+  localizacao: string;
+}

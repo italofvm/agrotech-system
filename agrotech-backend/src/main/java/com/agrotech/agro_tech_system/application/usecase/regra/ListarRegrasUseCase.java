@@ -35,7 +35,8 @@ public class ListarRegrasUseCase {
                 regra.getTipoSensor(),
                 regra.getOperador(),
                 regra.getValor(),
-                regra.isAtivo()
+                regra.isAtivo(),
+                regra.getMensagem()
         );
     }
 }

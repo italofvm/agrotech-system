@@ -4,6 +4,7 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { MaterialModule } from '../../shared/material/material.module';
 import { UsuarioService } from '../../services/usuario.service';
 import { UserRoleModel } from '../../models/user-role.model';
+import { AlertaNotificacaoService } from '../../services/alerta-notificacao.service';
 
 @Component({
   selector: 'app-header',
@@ -17,10 +18,12 @@ import { UserRoleModel } from '../../models/user-role.model';
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
-
 export class HeaderComponent {
-  private servicoUsuario = inject(UsuarioService);
-  private roteador = inject(Router);
+  private servicoUsuario      = inject(UsuarioService);
+  private roteador            = inject(Router);
+  private alertaNotificacao   = inject(AlertaNotificacaoService);
+
+  totalAlertasNovos = this.alertaNotificacao.totalNovos;
 
   estaLogado(): boolean {
     return this.servicoUsuario.estaLogado();
@@ -31,6 +34,11 @@ export class HeaderComponent {
       this.servicoUsuario.estaLogado() &&
       this.servicoUsuario.obterRole() === UserRoleModel.ADMIN
     );
+  }
+
+  irParaAlertas(): void {
+    this.alertaNotificacao.reconhecer();
+    this.roteador.navigate(['/alertas']);
   }
 
   sair(): void {

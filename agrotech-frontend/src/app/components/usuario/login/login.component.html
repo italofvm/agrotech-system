@@ -1,61 +1,88 @@
-<div class="login-wrapper">
-  <mat-card class="login-card">
-    <mat-card-header>
-      <mat-card-title>{{ tituloComp }}</mat-card-title>
-      <mat-card-subtitle>{{ subtituloComp }}</mat-card-subtitle>
-    </mat-card-header>
+<div class="auth-wrapper">
 
-    <mat-card-content>
-      <form [formGroup]="loginFormulario" (ngSubmit)="aoSubmeter()">
+  <!-- Painel esquerdo: Branding -->
+  <div class="brand-panel">
+    <div class="brand-content">
+
+      <div class="brand-logo">
+        <mat-icon>agriculture</mat-icon>
+        <span>AgroTech</span>
+      </div>
+
+      <h1 class="brand-headline">
+        Agricultura<br>
+        <span class="brand-accent">Inteligente</span>
+      </h1>
+
+      <p class="brand-desc">
+        Monitore suas áreas agrícolas em tempo real com dados
+        precisos, alertas automáticos e decisões baseadas em dados.
+      </p>
+
+      <div class="brand-features">
+        <div class="feature">
+          <mat-icon>sensors</mat-icon>
+          <span>Sensores IoT em tempo real</span>
+        </div>
+        <div class="feature">
+          <mat-icon>notifications_active</mat-icon>
+          <span>Alertas automáticos inteligentes</span>
+        </div>
+        <div class="feature">
+          <mat-icon>analytics</mat-icon>
+          <span>Análise histórica de dados</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="brand-deco deco-1"></div>
+    <div class="brand-deco deco-2"></div>
+  </div>
+
+  <!-- Painel direito: Formulário -->
+  <div class="form-panel">
+    <div class="form-container">
+
+      <div class="form-header">
+        <h2>Bem-vindo de volta</h2>
+        <p>Faça login para acessar o painel</p>
+      </div>
+
+      <form [formGroup]="loginFormulario" (ngSubmit)="aoSubmeter()" class="login-form">
+
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Login do Usuário</mat-label>
-          <input
-            matInput
-            type="email"
-            formControlName="login"
-            placeholder="Ex: seu.login@mail.com"
-          />
-
+          <mat-label>E-mail</mat-label>
+          <mat-icon matPrefix>email</mat-icon>
+          <input matInput type="email" formControlName="login" placeholder="seu@email.com" />
           @if (loginFormulario.get('login')?.invalid && loginFormulario.get('login')?.touched) {
-            <mat-error>Informe um login/e-mail válido.</mat-error>
+            <mat-error>Informe um e-mail válido.</mat-error>
           }
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Senha de Acesso</mat-label>
-          <input
-            matInput
-            type="password"
-            formControlName="senha"
-            placeholder="******"
-          />
-
+          <mat-label>Senha</mat-label>
+          <mat-icon matPrefix>lock_outline</mat-icon>
+          <input matInput [type]="senhaVisivel ? 'text' : 'password'" formControlName="senha" placeholder="Mínimo 6 caracteres" />
+          <button mat-icon-button matSuffix type="button" (click)="senhaVisivel = !senhaVisivel">
+            <mat-icon>{{ senhaVisivel ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
           @if (loginFormulario.get('senha')?.invalid && loginFormulario.get('senha')?.touched) {
             <mat-error>A senha deve ter no mínimo 6 caracteres.</mat-error>
           }
         </mat-form-field>
 
-        <button
-          mat-raised-button
-          color="primary"
-          class="full-width"
-          type="submit"
-          [disabled]="loginFormulario.invalid"
-        >
-          ENTRAR NO SISTEMA
+        <button mat-raised-button color="primary" class="full-width submit-btn" type="submit">
+          <mat-icon>login</mat-icon>
+          ENTRAR
         </button>
       </form>
-    </mat-card-content>
 
-    <mat-card-footer>
-      <button
-        mat-button
-        type="button"
-        class="full-width"
-        routerLink="/cadastro"
-      >
-        Não possui conta? Cadastre-se aqui
-      </button>
-    </mat-card-footer>
-  </mat-card>
+      <div class="form-footer">
+        <span>Não tem uma conta?</span>
+        <a routerLink="/cadastro" class="signup-link">Criar conta grátis</a>
+      </div>
+
+    </div>
+  </div>
+
 </div>

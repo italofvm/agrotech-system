@@ -630,7 +630,7 @@ Recomenda-se seguir o padrão [Conventional Commits](https://www.conventionalcom
 | Nome | Papel | Contato |
 |---|---|---|
 | *Arthur* | Desenvolvedor Full Stack | *Arthurkrz* |
-| *Italo* | Desenvolvedor Full Stack | *italofvm* |
+| *Italo* | Desenvolvedor Front-End | *italofvm* |
 | *Rodrigo* | Desenvolvedor Back-End | *RodrigoMeinel-Developer* |
 
 ---

@@ -152,16 +152,295 @@
     fill: var(--gray-900);
   }
 
-  @media screen and (max-width: 650px) {
-    .content {
-      flex-direction: column;
-      width: max-content;
-    }
+/* ==========================================
+   APP SHELL — SIDEBAR + HEADER + LAYOUT
+   ========================================== */
 
-    .divider {
-      height: 1px;
-      width: 100%;
-      background: var(--red-to-pink-to-purple-horizontal-gradient);
-      margin-block: 1.5rem;
-    }
+/* ---- Shell container ---- */
+.app-shell {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--c-bg);
+}
+
+/* ==========================================
+   SIDEBAR
+   ========================================== */
+.sidebar {
+  width: var(--sidebar-w);
+  height: 100vh;
+  background: linear-gradient(175deg, #1B5E20 0%, #2E7D32 60%, #388E3C 100%);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  overflow: hidden;
+  transition: width var(--t-slow);
+  position: relative;
+  z-index: 100;
+}
+
+.app-shell.sidebar-collapsed .sidebar {
+  width: var(--sidebar-w-collapsed);
+}
+
+/* Sidebar header */
+.sidebar-header {
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px 0 18px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  flex-shrink: 0;
+}
+
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  overflow: hidden;
+}
+
+.logo-icon {
+  color: #A5D6A7;
+  font-size: 26px;
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+}
+
+.logo-text {
+  color: #fff;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  opacity: 1;
+  transition: opacity var(--t-base);
+}
+
+.app-shell.sidebar-collapsed .logo-text {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sidebar-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: rgba(255,255,255,0.55);
+  padding: 6px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--t-fast), color var(--t-fast);
+  flex-shrink: 0;
+}
+
+.sidebar-toggle:hover {
+  background: rgba(255,255,255,0.12);
+  color: #fff;
+}
+
+/* Sidebar nav */
+.sidebar-nav {
+  flex: 1;
+  padding: 12px 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 11px 18px;
+  color: rgba(255,255,255,0.65);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  transition: color var(--t-fast), background var(--t-fast);
+  border: none;
+  background: none;
+  width: 100%;
+  cursor: pointer;
+  position: relative;
+  border-left: 3px solid transparent;
+}
+
+.nav-item mat-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.nav-item:hover {
+  color: #fff;
+  background: rgba(255,255,255,0.09);
+}
+
+.nav-item.nav-active {
+  color: #fff;
+  background: rgba(255,255,255,0.13);
+  border-left-color: var(--c-accent);
+}
+
+.nav-label {
+  transition: opacity var(--t-base);
+  white-space: nowrap;
+}
+
+.app-shell.sidebar-collapsed .nav-label {
+  opacity: 0;
+  width: 0;
+  overflow: hidden;
+}
+
+.nav-divider {
+  height: 1px;
+  background: rgba(255,255,255,0.1);
+  margin: 8px 18px;
+}
+
+/* Sidebar footer */
+.sidebar-footer {
+  padding: 10px 0;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  flex-shrink: 0;
+}
+
+.nav-logout {
+  color: rgba(255,255,255,0.5) !important;
+}
+
+.nav-logout:hover {
+  color: #FFCDD2 !important;
+  background: rgba(229, 57, 53, 0.18) !important;
+}
+
+/* ==========================================
+   ÁREA PRINCIPAL
+   ========================================== */
+.main-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 0;
+}
+
+/* ==========================================
+   HEADER FIXO
+   ========================================== */
+.app-header {
+  height: var(--header-h);
+  background: var(--c-surface);
+  border-bottom: 1px solid var(--c-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-xs);
+  z-index: 50;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-menu-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--c-text-secondary);
+  padding: 6px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  transition: background var(--t-fast);
+}
+
+.header-menu-btn:hover {
+  background: var(--c-border-light);
+  color: var(--c-text-primary);
+}
+
+.header-brand {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--c-text-secondary);
+  letter-spacing: 0.2px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.header-action-btn {
+  color: var(--c-text-secondary) !important;
+}
+
+.header-avatar-btn {
+  color: var(--c-primary-700) !important;
+  font-size: 28px !important;
+}
+
+.user-menu-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px 8px;
+  color: var(--c-text-secondary);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ==========================================
+   CONTEÚDO DA PÁGINA
+   ========================================== */
+.page-content {
+  flex: 1;
+  overflow-y: auto;
+  background: var(--c-bg);
+  /* Override do template padrão Angular */
+  display: block;
+  padding: 0;
+  min-height: unset;
+  justify-content: initial;
+  align-items: initial;
+}
+
+/* ==========================================
+   RESPONSIVIDADE
+   ========================================== */
+@media (max-width: 900px) {
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 200;
+    transform: translateX(0);
+    box-shadow: var(--shadow-lg);
   }
+
+  .app-shell.sidebar-collapsed .sidebar {
+    transform: translateX(-100%);
+    width: var(--sidebar-w);
+  }
+
+  .page-content {
+    padding: 16px;
+  }
+}

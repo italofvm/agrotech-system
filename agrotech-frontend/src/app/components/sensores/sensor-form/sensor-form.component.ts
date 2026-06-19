@@ -4,6 +4,7 @@ import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MaterialModule } from '../../../shared/material/material.module';
 import { SensorService } from '../../../services/sensor.service';
+import { TipoSensor } from '../../../models/sensor.model';
 
 @Component({
   selector: 'app-sensor-form',
@@ -14,6 +15,8 @@ import { SensorService } from '../../../services/sensor.service';
 })
 
 export class SensorFormComponent {
+  protected readonly TipoSensor = TipoSensor;
+
   private fb = inject(FormBuilder);
   private sensorService = inject(SensorService);
   private router = inject(Router);
@@ -37,7 +40,6 @@ export class SensorFormComponent {
       this.sensorService.salvar(novoSensor as any).subscribe({
         next: () => {
           this.router.navigate(['/sensores']);
-          console.log('Sensor salvo. Token antes de navegar:', localStorage.getItem('token'));
         },
         error: (err: any) => console.error('Erro ao salvar sensor:', err)
       });

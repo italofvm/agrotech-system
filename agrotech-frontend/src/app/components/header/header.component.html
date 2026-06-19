@@ -30,6 +30,15 @@
     </nav>
 
     <div class="user-section">
+      <button mat-icon-button
+        (click)="irParaAlertas()"
+        matTooltip="Alertas"
+        [matBadge]="totalAlertasNovos() > 0 ? totalAlertasNovos() : null"
+        matBadgeColor="warn"
+        matBadgeSize="small">
+        <mat-icon>notifications</mat-icon>
+      </button>
+
       <button mat-icon-button [matMenuTriggerFor]="menu">
         <mat-icon>account_circle</mat-icon>
       </button>

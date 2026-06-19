@@ -1,10 +1,12 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { MaterialModule } from '../../../shared/material/material.module';
 import { SensorService } from '../../../services/sensor.service';
 import { SensorModel } from '../../../models/sensor.model';
 import { UsuarioService } from '../../../services/usuario.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserRoleModel } from '../../../models/user-role.model';
 
 @Component({
@@ -21,6 +23,8 @@ export class SensorListComponent implements OnInit {
   private sensorService = inject(SensorService);
   private roteador = inject(Router);
   private usuarioService = inject(UsuarioService);
+  private destroyRef = inject(DestroyRef);
+  private snackBar = inject(MatSnackBar);
 
   listaDeSensores = signal<SensorModel[]>([]);
   estaCarregando = signal<boolean>(false);
@@ -34,14 +38,12 @@ export class SensorListComponent implements OnInit {
 
   carregarDadosSensores(): void {
     this.estaCarregando.set(true);
-    this.sensorService.buscarTodos().subscribe({
-      next: (dados: any) => {
+    this.sensorService.buscarTodos().pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
+      next: (dados: SensorModel[]) => {
         this.listaDeSensores.set(dados);
         this.estaCarregando.set(false);
-        console.log('Dados recebidos:', dados);
       },
-      error: (erro: any) => {
-        console.error('Erro ao carregar sensores:', erro);
+      error: (erro: Error) => {
         this.estaCarregando.set(false);
       }
     });
@@ -52,7 +54,8 @@ export class SensorListComponent implements OnInit {
       this.sensorService.deletar(id).subscribe({
         next: () => {
           this.carregarDadosSensores();
-        }
+        },
+        error: () => this.snackBar.open('Erro ao excluir sensor.', 'Fechar', { duration: 3000 })
       });
     }
   }
@@ -70,7 +73,7 @@ export class SensorListComponent implements OnInit {
 
   navegarParaCadastro(): void {
     if (this.usuarioService.obterRole() !== UserRoleModel.ADMIN) {
-      alert('Acesso negado. Apenas administradores podem cadastrar sensores.');
+      this.snackBar.open('Acesso negado. Apenas administradores podem cadastrar sensores.', 'Fechar', { duration: 4000 });
       return;
     }
 

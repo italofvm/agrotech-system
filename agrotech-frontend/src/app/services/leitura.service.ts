@@ -1,7 +1,9 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { SensorComLeituras } from '../models/leitura.model';
+import { map } from 'rxjs/operators';
+import { SensorModel } from '../models/sensor.model';
+import { LeituraComSensorModel, SensorComLeituras } from '../models/leitura.model';
 
 @Injectable({
   providedIn: 'root',
@@ -9,15 +11,26 @@ import { SensorComLeituras } from '../models/leitura.model';
 export class LeituraService {
   private http = inject(HttpClient);
 
-  private readonly apiURL: string = 'http://localhost:8080/api/sensores';
+  private readonly apiURL: string = 'http://localhost:8080/sensores';
 
   private readonly apiURLLeituras: string =
-    'http://localhost:8080/api/leituras';
+    'http://localhost:8080/leituras';
 
   constructor() { }
 
   obterDashboardCompleto(): Observable<SensorComLeituras[]> {
-    return this.http.get<SensorComLeituras[]>(`${this.apiURL}/com-leituras`);
+    return this.http.get<SensorModel[]>(this.apiURL).pipe(
+      map(sensores => sensores.map(s => ({
+        id: s.id,
+        nome: s.nome,
+        localizacaoAtual: s.localizacao,
+        leituras: s.leituras ?? [],
+      })))
+    );
+  }
+
+  buscarTodas(): Observable<LeituraComSensorModel[]> {
+    return this.http.get<LeituraComSensorModel[]>(this.apiURLLeituras);
   }
 
   registrarLeitura(leitura: any): Observable<void> {

@@ -6,10 +6,6 @@ export const authGuard: CanActivateFn = (route, state): boolean | UrlTree => {
   const usuarioService: UsuarioService = inject(UsuarioService);
   const router: Router = inject(Router);
 
-  console.log('URL tentando acessar:', state.url);
-  console.log('Token:', localStorage.getItem('token'));
-  console.log('Está logado:', usuarioService.estaLogado());
-
   if (usuarioService.estaLogado()) {
     return true;
   }

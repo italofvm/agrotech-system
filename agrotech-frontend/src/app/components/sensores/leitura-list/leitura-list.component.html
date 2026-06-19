@@ -1,0 +1,110 @@
+<div class="page-wrapper">
+
+  <!-- Cabeçalho -->
+  <div class="page-header">
+    <div class="header-left">
+      <button mat-icon-button (click)="voltar()" matTooltip="Voltar ao Dashboard">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <div>
+        <h1 class="page-title">Histórico de Leituras</h1>
+        <p class="page-subtitle">Todas as leituras registradas pelos sensores</p>
+      </div>
+    </div>
+    <div class="header-right">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Filtrar por sensor</mat-label>
+        <input matInput [ngModel]="filtroSensor()" (ngModelChange)="onFiltroChange($event)" placeholder="Nome do sensor..." />
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  @if (carregando()) {
+    <div class="loading-state">
+      <mat-spinner diameter="44"></mat-spinner>
+      <p>Carregando leituras...</p>
+    </div>
+  }
+
+  <!-- Erro -->
+  @if (!carregando() && erro()) {
+    <mat-card class="table-card">
+      <mat-card-content>
+        <div class="empty-state">
+          <mat-icon style="color: #c62828">error_outline</mat-icon>
+          <p>Erro ao carregar leituras. Verifique se o servidor está ativo e tente novamente.</p>
+          <button mat-stroked-button color="warn" (click)="ngOnInit()">
+            <mat-icon>refresh</mat-icon> Tentar novamente
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  }
+
+  <!-- Tabela -->
+  @if (!carregando() && !erro()) {
+    <mat-card class="table-card">
+      <mat-card-content>
+
+        @if (leiturasFiltradas().length === 0) {
+          <div class="empty-state">
+            <mat-icon>sensors_off</mat-icon>
+            <p>Nenhuma leitura encontrada.</p>
+          </div>
+        } @else {
+
+          <div class="count-bar">
+            <span class="count-label">
+              <mat-icon inline>analytics</mat-icon>
+              {{ leiturasFiltradas().length }} leituras encontradas
+            </span>
+            <span class="page-info">
+              Página {{ paginaAtual() + 1 }} de {{ totalPaginas() }}
+            </span>
+          </div>
+
+          <div class="table-scroll">
+            <table class="leituras-table">
+              <thead>
+                <tr>
+                  <th>Sensor</th>
+                  <th>Valor</th>
+                  <th>Data / Hora</th>
+                  <th>Localização na Coleta</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (leitura of leiturasPagina(); track leitura.id) {
+                  <tr>
+                    <td class="sensor-cell">
+                      <mat-icon class="sensor-icon">sensors</mat-icon>
+                      {{ leitura.sensorNome }}
+                    </td>
+                    <td class="valor-cell">{{ leitura.valor }}</td>
+                    <td class="date-cell">{{ leitura.dataHora | date:'dd/MM/yyyy HH:mm:ss' }}</td>
+                    <td class="loc-cell">{{ leitura.localizacao }}</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Paginação -->
+          <div class="pagination-bar">
+            <button mat-stroked-button (click)="paginaAnterior()" [disabled]="paginaAtual() === 0">
+              <mat-icon>chevron_left</mat-icon> Anterior
+            </button>
+            <span class="page-indicator">{{ paginaAtual() + 1 }} / {{ totalPaginas() }}</span>
+            <button mat-stroked-button (click)="proximaPagina()" [disabled]="paginaAtual() >= totalPaginas() - 1">
+              Próxima <mat-icon>chevron_right</mat-icon>
+            </button>
+          </div>
+
+        }
+      </mat-card-content>
+    </mat-card>
+  }
+
+</div>

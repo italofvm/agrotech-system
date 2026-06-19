@@ -35,7 +35,7 @@ public class SensorController {
     private final DeletarSensores deletarSensor;
 
     @PostMapping
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(operationId = "criarSensor")
     public ResponseEntity<Void> criar(@Valid @RequestBody CriarSensorDTO criarSensor) {
         cadastrarSensor.executar(criarSensor);
@@ -61,7 +61,7 @@ public class SensorController {
             @PathVariable String id,
             @RequestBody AtualizarSensorDTO atualizar) {
 
-        atualizarSensor.executar(id, atualizar.nome());
+        atualizarSensor.executar(id, atualizar);
         return ResponseEntity.ok().build();
     }
 

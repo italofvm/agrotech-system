@@ -1,0 +1,41 @@
+.alerta-wrapper {
+  padding: 24px;
+}
+
+.alerta-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.alerta-header h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--c-primary-800);
+  margin: 0;
+}
+
+.filtro-group {
+  display: flex;
+  gap: 8px;
+}
+
+.tabela-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+}
+
+.status-ativo {
+  color: var(--c-danger);
+  font-weight: bold;
+}
+
+.status-resolvido {
+  color: var(--c-success);
+  font-weight: bold;
+}

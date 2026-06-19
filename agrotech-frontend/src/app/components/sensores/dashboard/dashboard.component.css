@@ -1,33 +1,268 @@
-.dashboard-wrapper {
-  padding: 24px;
+/* ==========================================
+   DASHBOARD
+   ========================================== */
+
+:host {
+  display: block;
+  min-height: 100%;
+  background: linear-gradient(160deg, #f4f9f1 0%, #eef4fb 50%, #f5f7fa 100%);
 }
 
-.header-section {
-  margin-bottom: 32px;
-  border-left: 5px solid #2e7d32;
-  padding-left: 15px;
+.dash-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
 }
 
+.dash-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: #2e7d32;
+  background: #e8f5e9;
+  border: 1px solid #a5d6a7;
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+
+.live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #43a047;
+  animation: pulse-dot 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.4; transform: scale(0.75); }
+}
+
+.kpi-alerta-ativo {
+  color: #c62828;
+  animation: pulse-dot 1.5s ease-in-out infinite;
+}
+
+/* ---- KPI Cards ---- */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 36px;
+}
+
+.kpi-card {
+  background: var(--c-surface);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--c-border);
+  padding: 22px 20px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--t-fast), transform var(--t-fast);
+}
+
+.kpi-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.kpi-icon-wrap {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.kpi-icon-wrap mat-icon {
+  font-size: 26px;
+  width: 26px;
+  height: 26px;
+}
+
+.kpi-primary .kpi-icon-wrap { background: var(--c-primary-50); }
+.kpi-primary .kpi-icon-wrap mat-icon { color: var(--c-primary-800); }
+
+.kpi-success .kpi-icon-wrap { background: var(--c-success-bg); }
+.kpi-success .kpi-icon-wrap mat-icon { color: var(--c-success); }
+
+.kpi-info .kpi-icon-wrap { background: var(--c-info-bg); }
+.kpi-info .kpi-icon-wrap mat-icon { color: var(--c-info); }
+
+.kpi-warning .kpi-icon-wrap { background: var(--c-warning-bg); }
+.kpi-warning .kpi-icon-wrap mat-icon { color: var(--c-warning); }
+
+.kpi-info-obj {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.kpi-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--c-text-primary);
+  line-height: 1;
+  display: block;
+}
+
+.kpi-label {
+  font-size: 0.8rem;
+  color: var(--c-text-secondary);
+  font-weight: 500;
+  display: block;
+  white-space: normal;
+  line-height: 1.35;
+}
+
+/* Fix: kpi-info inside card */
+.kpi-card .kpi-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+/* ---- Section title ---- */
+.section-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--c-text-primary);
+  margin: 0 0 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--c-border);
+}
+
+/* ---- Sensor Grid ---- */
 .sensor-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 20px;
 }
 
 .sensor-card {
-  border-top: 4px solid #3f51b5;
+  border-top: 3px solid var(--c-primary-600) !important;
 }
 
-.table-title {
-  margin-top: 16px;
-  color: #666;
-  font-size: 0.9rem;
-  text-transform: uppercase;
+.sensor-avatar {
+  width: 40px;
+  height: 40px;
+  background: var(--c-primary-50);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.table-container {
-  max-height: 200px;
+.sensor-avatar mat-icon {
+  color: var(--c-primary-800);
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.readings-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 0 8px;
+}
+
+.readings-count {
+  font-size: 0.75rem;
+}
+
+.table-wrap {
+  max-height: 220px;
   overflow-y: auto;
+  border: 1px solid var(--c-border-light);
+  border-radius: var(--radius-sm);
+}
+
+.readings-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.825rem;
+}
+
+.readings-table th {
+  text-align: left;
+  background: var(--c-border-light);
+  padding: 8px 10px;
+  font-weight: 600;
+  color: var(--c-text-secondary);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.readings-table td {
+  padding: 8px 10px;
+  border-top: 1px solid var(--c-border-light);
+  color: var(--c-text-primary);
+}
+
+.readings-table tr:hover td {
+  background: var(--c-primary-50);
+}
+
+.valor-destaque {
+  font-weight: 600;
+  color: var(--c-primary-800);
+}
+
+.loc-cell {
+  color: var(--c-text-secondary);
+  font-size: 0.8rem;
+}
+
+.more-rows {
+  text-align: center;
+  color: var(--c-text-muted);
+  font-style: italic;
+  background: var(--c-border-light) !important;
+}
+
+.empty-state-full {
+  grid-column: 1 / -1;
+  padding: 80px 24px;
+}
+
+/* ---- Loading ---- */
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px;
+  gap: 16px;
+  color: var(--c-text-secondary);
+}
+
+.loading-state p {
+  margin: 0;
+  font-size: 0.875rem;
   border: 1px solid #eee;
   border-radius: 4px;
 }
@@ -71,4 +306,22 @@
 small {
   color: #666;
   font-style: italic;
+}
+
+.readings-recentes-label {
+  font-size: 0.72rem;
+  color: var(--c-text-muted);
+  font-style: italic;
+  margin-left: auto;
+}
+
+.link-historico {
+  color: var(--c-primary-600);
+  cursor: pointer;
+  text-decoration: underline;
+  font-style: normal;
+}
+
+.link-historico:hover {
+  color: var(--c-primary-800);
 }

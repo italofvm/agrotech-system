@@ -58,7 +58,7 @@ public class AreaController {
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(operationId = "deletarArea")
     public ResponseEntity<Void> deletar(@PathVariable String id) {
-        deletarArea.execute(id);
+        deletarArea.executar(id);
         return ResponseEntity.noContent().build();
     }
 }

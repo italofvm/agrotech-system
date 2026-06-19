@@ -1,7 +1,9 @@
-import { Injectable, inject, signal, computed } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { SensorModel } from '../models/sensor.model';
+import { SensorComLeituras } from '../models/leitura.model';
 
 @Injectable({
   providedIn: 'root',
@@ -36,7 +38,14 @@ export class SensorService {
     return this.http.delete<void>(`${this.apiURL}/${id}`);
   }
 
-  buscarComLeituras(id: string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiURL}/com-leituras`);
+  buscarComLeituras(id: string): Observable<SensorComLeituras> {
+    return this.http.get<SensorModel>(`${this.apiURL}/${id}`).pipe(
+      map(s => ({
+        id: s.id,
+        nome: s.nome,
+        localizacaoAtual: s.localizacao,
+        leituras: s.leituras ?? [],
+      }))
+    );
   }
 }

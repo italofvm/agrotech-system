@@ -8,5 +8,6 @@ public record RegraResponseDTO(
     TipoSensor tipoSensor,
     OperadorRegra operador,
     double valor,
-    boolean ativo
+    boolean ativo,
+    String mensagem
 ) { }

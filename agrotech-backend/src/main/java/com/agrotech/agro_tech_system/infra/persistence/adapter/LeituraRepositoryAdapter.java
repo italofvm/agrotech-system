@@ -7,6 +7,7 @@ import com.agrotech.agro_tech_system.infra.persistence.entity.LeituraEntity;
 import com.agrotech.agro_tech_system.infra.persistence.repository.JpaLeituraRepository;
 import com.agrotech.agro_tech_system.infra.persistence.repository.JpaSensorRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -35,6 +36,24 @@ public class LeituraRepositoryAdapter implements LeituraRepository {
     @Override
     public List<Leitura> buscarPorSensor(String sensorId) {
         return jpaLeituraRepository.findBySensorId(sensorId)
+            .stream()
+            .map(entity -> new Leitura(entity.getId(),
+                new Sensor(entity.getSensor().getId(),
+                    entity.getSensor().getNome(),
+                    entity.getSensor().getLocalizacao(),
+                    true,
+                    entity.getSensor().getTipo()
+                ),
+                entity.getValor(),
+                entity.getDataHora(),
+                entity.getLocalizacao()
+            ))
+            .toList();
+    }
+
+    @Override
+    public List<Leitura> buscarTodas() {
+        return jpaLeituraRepository.findAll(Sort.by(Sort.Direction.DESC, "dataHora"))
             .stream()
             .map(entity -> new Leitura(entity.getId(),
                 new Sensor(entity.getSensor().getId(),

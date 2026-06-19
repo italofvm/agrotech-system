@@ -36,7 +36,7 @@
 
 .active-link {
   background: rgba(255, 255, 255, 0.15);
-  border-bottom: 3px solid #ffd740; /* Cor Accent do Material */
+  border-bottom: 3px solid var(--c-accent); /* Âmbar #FFC107 */
 }
 
 /* Esconder links em telas muito pequenas */

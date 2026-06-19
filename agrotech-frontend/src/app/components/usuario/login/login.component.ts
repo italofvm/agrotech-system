@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-
-import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { UsuarioService } from '../../../services/usuario.service';
 
 @Component({
@@ -14,22 +14,21 @@ import { UsuarioService } from '../../../services/usuario.service';
   imports: [
     ReactiveFormsModule,
     RouterLink,
-    MatCardModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    MatIconModule,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-
 export class LoginComponent {
-  public tituloComp = 'Login';
-  public subtituloComp = 'Informe seus dados para acessar o sistema';
+  senhaVisivel = false;
 
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private usuarioService = inject(UsuarioService);
+  private snackBar = inject(MatSnackBar);
 
   public loginFormulario = this.fb.nonNullable.group({
     login: ['', [Validators.required, Validators.email]],
@@ -43,16 +42,14 @@ export class LoginComponent {
     }
 
     this.usuarioService.login(this.loginFormulario.getRawValue()).subscribe({
-      next: (resposta) => {
-        console.log('Resposta do login:', resposta);
-        console.log('Token salvo:', localStorage.getItem('token'));
-
-        this.router.navigate(['/sensores']);
+      next: () => {
+        this.router.navigate(['/telemetria/dashboard']);
       },
       error: (erro) => {
-        console.error('Erro ao fazer login:', erro);
-        console.error('Status:', erro.status);
-        console.error('Body:', erro.error);
+        const mensagem = erro.status === 401
+          ? 'E-mail ou senha inválidos.'
+          : 'Erro ao conectar com o servidor. Tente novamente.';
+        this.snackBar.open(mensagem, 'Fechar', { duration: 4000 });
       }
     });
   }

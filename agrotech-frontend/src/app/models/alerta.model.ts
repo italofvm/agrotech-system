@@ -1,6 +1,6 @@
 export enum StatusAlerta {
-  ATIVO = 'ATIVO',
-  RESOLVIDO = 'RESOLVIDO',
+  ATIVO = 'ativo',
+  RESOLVIDO = 'resolvido',
 }
 
 export interface AlertaModel {
