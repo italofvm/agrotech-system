@@ -12,8 +12,8 @@ public enum UserRole {
     @Schema(description = "Administrador")
     ADMIN("admin"),
 
-    @Schema(description = "Operador comum")
-    OPERADOR("operador");
+    @Schema(description = "Usuário comum")
+    USER("user");
 
     private String role;
 

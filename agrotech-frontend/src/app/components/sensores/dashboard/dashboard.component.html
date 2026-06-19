@@ -1,1 +1,155 @@
-<p>dashboard works!</p>
+<div class="page-wrapper">
+
+  <!-- Cabeçalho da página -->
+  <div class="dash-header">
+    <div>
+      <h1 class="page-title">Dashboard</h1>
+      <p class="page-subtitle">Monitoramento consolidado da rede de sensores</p>
+    </div>
+    <div class="dash-header-actions">
+      @if (ultimaAtualizacao()) {
+        <span class="live-badge">
+          <span class="live-dot"></span>
+          AO VIVO · {{ ultimaAtualizacao() | date:'HH:mm:ss' }}
+        </span>
+      }
+      <button mat-stroked-button color="accent" (click)="verHistoricoCompleto()">
+        <mat-icon>history</mat-icon> Histórico Completo
+      </button>
+      <button mat-stroked-button color="primary" (click)="carregarDados()" [disabled]="carregando()">
+        <mat-icon>refresh</mat-icon> Atualizar
+      </button>
+    </div>
+  </div>
+
+  <!-- KPI Cards -->
+  @if (!carregando()) {
+    <div class="kpi-grid">
+
+      <div class="kpi-card kpi-primary">
+        <div class="kpi-icon-wrap">
+          <mat-icon>sensors</mat-icon>
+        </div>
+        <div class="kpi-info">
+          <span class="kpi-value">{{ totalSensores() }}</span>
+          <span class="kpi-label">Total de Sensores</span>
+        </div>
+      </div>
+
+      <div class="kpi-card kpi-success">
+        <div class="kpi-icon-wrap">
+          <mat-icon>wifi_tethering</mat-icon>
+        </div>
+        <div class="kpi-info">
+          <span class="kpi-value">{{ sensoresAtivos() }}</span>
+          <span class="kpi-label">Sensores com Leituras</span>
+        </div>
+      </div>
+
+      <div class="kpi-card kpi-info">
+        <div class="kpi-icon-wrap">
+          <mat-icon>analytics</mat-icon>
+        </div>
+        <div class="kpi-info">
+          <span class="kpi-value">{{ totalLeituras() }}</span>
+          <span class="kpi-label">Leituras Coletadas</span>
+        </div>
+      </div>
+
+      <div class="kpi-card kpi-warning">
+        <div class="kpi-icon-wrap">
+          <mat-icon>notifications_active</mat-icon>
+        </div>
+        <div class="kpi-info">
+          <span class="kpi-value" [class.kpi-alerta-ativo]="totalAlertasAtivos() > 0">
+            {{ totalAlertasAtivos() }}
+          </span>
+          <span class="kpi-label">Alertas Ativos</span>
+        </div>
+      </div>
+
+    </div>
+  }
+
+  <!-- Loading state -->
+  @if (carregando()) {
+    <div class="loading-state">
+      <mat-spinner diameter="44"></mat-spinner>
+      <p>Sincronizando telemetria...</p>
+    </div>
+  }
+
+  <!-- Grid de sensores -->
+  @if (!carregando()) {
+    <h2 class="section-title">Leituras por Sensor</h2>
+    <div class="sensor-grid">
+
+      @for (sensor of listaSensoresComLeituras(); track sensor.id) {
+        <mat-card class="sensor-card">
+
+          <mat-card-header>
+            <div class="sensor-avatar" mat-card-avatar>
+              <mat-icon>sensors</mat-icon>
+            </div>
+            <mat-card-title>{{ sensor.nome }}</mat-card-title>
+            <mat-card-subtitle>
+              <mat-icon inline>place</mat-icon>
+              {{ sensor.localizacaoAtual || 'Localização não definida' }}
+            </mat-card-subtitle>
+          </mat-card-header>
+
+          <mat-divider></mat-divider>
+
+          <mat-card-content>
+            @if (sensor.leituras.length > 0) {
+              <div class="readings-header">
+                <span class="readings-count chip-online">{{ sensor.leituras.length }} leituras</span>
+                <span class="readings-recentes-label">Exibindo as 3 mais recentes</span>
+              </div>
+              <div class="table-wrap">
+                <table class="readings-table">
+                  <thead>
+                    <tr>
+                      <th>Data / Hora</th>
+                      <th>Valor</th>
+                      <th>Local na Coleta</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @for (leitura of sensor.leituras.slice(0, 3); track leitura.id) {
+                      <tr>
+                        <td>{{ leitura.dataHora | date:'dd/MM/yy HH:mm' }}</td>
+                        <td class="valor-destaque">{{ leitura.valor }}</td>
+                        <td class="loc-cell">{{ leitura.localizacao }}</td>
+                      </tr>
+                    }
+                    @if (sensor.leituras.length > 3) {
+                      <tr>
+                        <td colspan="3" class="more-rows">+ {{ sensor.leituras.length - 3 }} leituras anteriores · <a class="link-historico" (click)="verHistoricoCompleto()">ver todas</a></td>
+                      </tr>
+                    }
+                  </tbody>
+                </table>
+              </div>
+            } @else {
+              <div class="empty-state">
+                <mat-icon>cloud_off</mat-icon>
+                <p>Nenhuma leitura registrada.</p>
+              </div>
+            }
+          </mat-card-content>
+
+        </mat-card>
+      }
+
+      @empty {
+        <div class="empty-state empty-state-full">
+          <mat-icon>hub</mat-icon>
+          <p>Nenhum sensor encontrado. Cadastre sensores para iniciar o monitoramento.</p>
+        </div>
+      }
+
+    </div>
+  }
+
+</div>

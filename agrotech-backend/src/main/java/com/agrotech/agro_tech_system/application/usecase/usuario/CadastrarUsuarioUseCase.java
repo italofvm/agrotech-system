@@ -1,6 +1,5 @@
 package com.agrotech.agro_tech_system.application.usecase.usuario;
 
-
 import com.agrotech.agro_tech_system.domain.enums.UserRole;
 import com.agrotech.agro_tech_system.domain.exception.RegraNegocioException;
 import com.agrotech.agro_tech_system.domain.models.Usuario;

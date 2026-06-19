@@ -24,7 +24,6 @@ public class Area {
         this.descricao = descricao;
     }
 
-    // comportamento
     public void alterarDescricao(String novaDescricao) {
         this.descricao = novaDescricao;
     }

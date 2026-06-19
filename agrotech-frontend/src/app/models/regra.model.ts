@@ -1,6 +1,6 @@
 export enum OperadorRegra {
-  MAIOR_QUE = 'MAIOR_QUE',
-  MENOR_QUE = 'MENOR_QUE',
+  MAIOR_QUE = '>',
+  MENOR_QUE = '<',
 }
 
 export enum TipoSensorRegra {
@@ -16,10 +16,12 @@ export interface RegraModel {
   operador: OperadorRegra;
   valor: number;
   ativo: boolean;
+  mensagem: string;
 }
 
 export interface CriarRegraDTO {
   tipoSensor: TipoSensorRegra;
   operador: OperadorRegra;
   valor: number;
+  mensagem: string;
 }

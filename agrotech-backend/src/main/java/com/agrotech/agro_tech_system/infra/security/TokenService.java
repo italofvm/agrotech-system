@@ -19,30 +19,29 @@ public class TokenService {
 	
 	public String gerarToken(UsuarioEntity usuario) {
 		
-		Algorithm algoritomo = Algorithm.HMAC256(secret);
+		Algorithm algoritmo = Algorithm.HMAC256(secret);
 		return JWT.create()
-				.withIssuer("agrotech-system") // emissor de token
-				.withSubject(usuario.getLogin()) // dados de Login do usuario
-				.withClaim("role", usuario.getRole().name()) // acesso a role do usuario no token
-				.withExpiresAt(dataExpiracao()) // este é a data de experiaçãodo token
-				.sign(algoritomo); // criação do token é assinada 
+			.withIssuer("agrotech-system")
+			.withSubject(usuario.getLogin())
+			.withClaim("role", usuario.getRole().name())
+			.withExpiresAt(dataExpiracao())
+			.sign(algoritmo); 
 	}
-	
 	
 	private Instant dataExpiracao() {
 		return LocalDateTime.now()
-				.plusHours(2)
-				.toInstant(ZoneOffset.of("-03:00"));
+			.plusHours(2)
+			.toInstant(ZoneOffset.of("-03:00"));
 		
 	}
 	
 	public String getSubject(String token) {
-		Algorithm algoritimo = Algorithm.HMAC256(secret);
+		Algorithm algoritmo = Algorithm.HMAC256(secret);
 		
-		return JWT.require(algoritimo)
-				.withIssuer("agrotech-system")
-				.build()
-				.verify(token)
-				.getSubject();
+		return JWT.require(algoritmo)
+			.withIssuer("agrotech-system")
+			.build()
+			.verify(token)
+			.getSubject();
 	}
 }

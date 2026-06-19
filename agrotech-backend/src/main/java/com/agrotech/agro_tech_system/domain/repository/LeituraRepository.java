@@ -9,4 +9,6 @@ public interface LeituraRepository {
 	Leitura salvar(Leitura leitura);
 
 	List<Leitura> buscarPorSensor(String sensorId);
+
+	List<Leitura> buscarTodas();
 }

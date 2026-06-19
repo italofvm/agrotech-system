@@ -1,1 +1,59 @@
-<p>sensor-detail works!</p>
+<div class="detail-container">
+  @if (carregando()) {
+    <div class="loading-state">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>Consultando banco de dados...</p>
+    </div>
+  } @else if (sensor()) {
+    <div class="header-detail">
+      <button mat-icon-button (click)="voltar()"><mat-icon>arrow_back</mat-icon></button>
+      <h1>Detalhes do Dispositivo: {{ sensor()?.nome }}</h1>
+    </div>
+
+    <div class="grid-layout">
+      <mat-card class="info-card">
+        <mat-card-header>
+          <mat-icon mat-card-avatar color="primary">info</mat-icon>
+          <mat-card-title>Status Atual</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p><strong>Tipo:</strong> {{ sensor()?.tipo }}</p>
+          <p><strong>Localização Atual:</strong> {{ sensor()?.localizacao }}</p>
+          <p><strong>Status:</strong> 
+            <span [class.online]="sensor()?.ativo" [class.offline]="!sensor()?.ativo">
+              {{ sensor()?.ativo ? 'ATIVO' : 'INATIVO' }}
+            </span>
+          </p>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="history-card">
+        <mat-card-header>
+          <mat-icon mat-card-avatar color="accent">history</mat-icon>
+          <mat-card-title>Rastreabilidade de Localização</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-list>
+            @for (loc of sensor()?.historico; track loc.id) {
+              <mat-list-item>
+                <mat-icon matListItemIcon>place</mat-icon>
+                <div matListItemTitle>{{ loc.localizacao }}</div>
+                <div matListItemLine>
+                  Início: {{ loc.dataInicio | date:'dd/MM/yyyy HH:mm' }} 
+                  @if (loc.dataFim) {
+                    | Fim: {{ loc.dataFim | date:'dd/MM/yyyy HH:mm' }}
+                  } @else {
+                    | <span class="current-label">ATUAL</span>
+                  }
+                </div>
+              </mat-list-item>
+              <mat-divider></mat-divider>
+            } @empty {
+              <p class="empty-msg">Nenhum histórico de movimentação registrado.</p>
+            }
+          </mat-list>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  }
+</div>

@@ -11,8 +11,9 @@ public class DeletarAreaUseCase {
 
     private final AreaRepository areaRepository;
 
-    public void execute(String id){
+    public void executar(String id){
         areaRepository.buscarPorId(id)
                 .orElseThrow(() -> new ValidacaoException("Área não encontrada!"));
+        areaRepository.deletar(id);
     }
 }

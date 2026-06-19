@@ -1,38 +1,36 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, inject, signal, computed } from '@angular/core';
+import { Injectable, computed, inject, signal } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
 
-import { UsuarioModel } from '../models/usuario.model';
+import { UsuarioModel, CadastroDTO } from '../models/usuario.model';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class UsuarioService {
   private http = inject(HttpClient);
-
   private readonly apiURL = 'http://localhost:8080';
 
   private _estaLogado = signal<boolean>(this.verificarToken());
-
-  public estaLogado = computed(() => this._estaLogado());
+  public logado = computed(() => this._estaLogado());
 
   constructor() {}
 
-  cadastrar(usuario: UsuarioModel): Observable<void> {
-    return this.http.post<void>(`${this.apiURL}/usuarios`, usuario);
+  cadastrar(usuario: CadastroDTO): Observable<void> {
+    return this.http.post<void>(`${this.apiURL}/cadastro`, usuario);
   }
 
-  login(credenciais: Partial<UsuarioModel>): Observable<{ token: string }> {
-    return this.http
-      .post<{ token: string }>(`${this.apiURL}/auth/login`, credenciais)
+  login(credenciais: { login: string; senha: string }): Observable<{ token: string }> {
+    return this.http.post<{ token: string }>(`${this.apiURL}/auth/login`, credenciais)
       .pipe(
-        tap((resposta) => {
+        tap(resposta => {
           localStorage.setItem('token', resposta.token);
-
           this._estaLogado.set(true);
-        }),
+        })
       );
+  }
+
+  estaLogado(): boolean {
+    return this._estaLogado();
   }
 
   private verificarToken(): boolean {
@@ -45,12 +43,15 @@ export class UsuarioService {
 
   obterRole(): string | null {
     const token = this.obterToken();
-    if (!token) {
+    if (!token) return null;
+
+    try {
+      const decode: any = jwtDecode(token);
+      return decode.role || null;
+    } catch {
+      this.logout();
       return null;
     }
-    const decode: any = jwtDecode(token);
-
-    return decode.roles || null;
   }
 
   logout(): void {

@@ -4,14 +4,15 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public record DashboardResponseDTO(
-        long totalSensores,
-        long totalAlertas,
-        long alertasAtivos,
-        List<LeituraRecenteDTO> leiturasRecentes
+    long totalSensores,
+    long totalAlertas,
+    long alertasAtivos,
+    List<LeituraRecenteDTO> leiturasRecentes
 ) {
+	
     public record LeituraRecenteDTO(
-            String sensorNome,
-            Double valor,
-            LocalDateTime dataHora
-    ){}
+        String sensorNome,
+        Double valor,
+        LocalDateTime dataHora
+    ) { }
 }

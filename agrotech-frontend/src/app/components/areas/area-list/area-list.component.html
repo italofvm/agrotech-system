@@ -1,1 +1,40 @@
-<p>area-list works!</p>
+<div class="area-wrapper">
+  <div class="area-header">
+    <h2>Gestão de Áreas</h2>
+    <button mat-raised-button color="primary" routerLink="/areas/nova">
+      <mat-icon>add</mat-icon> Nova Área
+    </button>
+  </div>
+
+  <table mat-table [dataSource]="areas" class="mat-elevation-z2">
+
+    <ng-container matColumnDef="nome">
+      <th mat-header-cell *matHeaderCellDef>Nome</th>
+      <td mat-cell *matCellDef="let area">{{ area.nome }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="descricao">
+      <th mat-header-cell *matHeaderCellDef>Descrição</th>
+      <td mat-cell *matCellDef="let area">{{ area.descricao || '—' }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="acoes">
+      <th mat-header-cell *matHeaderCellDef>Ações</th>
+      <td mat-cell *matCellDef="let area">
+        <button mat-icon-button color="primary"
+          [routerLink]="['/areas/editar', area.id]"
+          matTooltip="Editar área">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn"
+          (click)="deletar(area.id)"
+          matTooltip="Deletar área">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="colunas"></tr>
+    <tr mat-row *matRowDef="let row; columns: colunas;"></tr>
+  </table>
+</div>

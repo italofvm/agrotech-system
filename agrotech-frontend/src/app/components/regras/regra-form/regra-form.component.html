@@ -1,1 +1,61 @@
-<p>regra-form works!</p>
+<div class="form-wrapper">
+  <mat-card class="form-card">
+    <mat-card-header>
+      <mat-card-title>{{ tituloComp }}</mat-card-title>
+      <mat-card-subtitle>{{ subtituloComp }}</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="regraFormulario" (ngSubmit)="aoSubmeter()">
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Tipo de Sensor</mat-label>
+          <mat-select formControlName="tipoSensor">
+            @for (tipo of tiposSensor; track tipo) {
+              <mat-option [value]="tipo">{{ tipo }}</mat-option>
+            }
+          </mat-select>
+          @if (regraFormulario.get('tipoSensor')?.invalid && regraFormulario.get('tipoSensor')?.touched) {
+            <mat-error>Tipo de sensor é obrigatório.</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Condição</mat-label>
+          <mat-select formControlName="operador">
+            @for (op of operadores; track op) {
+              <mat-option [value]="op">{{ op }}</mat-option>
+            }
+          </mat-select>
+          @if (regraFormulario.get('operador')?.invalid && regraFormulario.get('operador')?.touched) {
+            <mat-error>Condição é obrigatória.</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Valor Limite</mat-label>
+          <input matInput type="number" formControlName="valor" placeholder="Ex: 35">
+          @if (regraFormulario.get('valor')?.invalid && regraFormulario.get('valor')?.touched) {
+            <mat-error>Valor deve ser maior que zero.</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Mensagem de Alerta</mat-label>
+          <input matInput formControlName="mensagem" placeholder="Ex: Temperatura acima do limite permitido">
+          @if (regraFormulario.get('mensagem')?.invalid && regraFormulario.get('mensagem')?.touched) {
+            <mat-error>Mensagem de alerta é obrigatória.</mat-error>
+          }
+        </mat-form-field>
+
+        <div class="button-group">
+          <button mat-button type="button" (click)="cancelar()">Cancelar</button>
+          <button mat-raised-button color="primary" type="submit"
+            [disabled]="regraFormulario.invalid">
+            Cadastrar
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -14,7 +14,7 @@ public class LeituraScheduler {
         this.gerarLeituraUseCase = gerarLeituraUseCase;
     }
 
-    @Scheduled(fixedRate = 10000) // a cada 10s
+    @Scheduled(fixedRate = 10000)
     public void gerarLeituraAutomatica() {
         gerarLeituraUseCase.executar();
     }

@@ -32,6 +32,7 @@ public class SensorRepositoryAdapter implements SensorRepository {
         entity.setNome(sensor.getNome());
         entity.setLocalizacao(sensor.getLocalizacao());
         entity.setTipo(sensor.getTipo());
+        entity.setAtivo(sensor.isAtivo());
 
         SensorEntity salvo = jpaSensorRepository.save(entity);
         return PersistenceMapper.toDomain(salvo);

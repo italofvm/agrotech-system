@@ -1,1 +1,112 @@
-<p>cadastro works!</p>
+<div class="auth-wrapper">
+
+  <!-- Painel esquerdo: Branding -->
+  <div class="brand-panel">
+    <div class="brand-content">
+
+      <div class="brand-logo">
+        <mat-icon>agriculture</mat-icon>
+        <span>AgroTech</span>
+      </div>
+
+      <h1 class="brand-headline">
+        Crie sua<br>
+        <span class="brand-accent">Conta</span>
+      </h1>
+
+      <p class="brand-desc">
+        Junte-se ao AgroTech System e comece a monitorar suas
+        áreas agrícolas com tecnologia de ponta.
+      </p>
+
+      <div class="brand-features">
+        <div class="feature">
+          <mat-icon>verified</mat-icon>
+          <span>Acesso seguro e criptografado</span>
+        </div>
+        <div class="feature">
+          <mat-icon>speed</mat-icon>
+          <span>Configuração rápida em minutos</span>
+        </div>
+        <div class="feature">
+          <mat-icon>support_agent</mat-icon>
+          <span>Suporte técnico dedicado</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="brand-deco deco-1"></div>
+    <div class="brand-deco deco-2"></div>
+  </div>
+
+  <!-- Painel direito: Formulário -->
+  <div class="form-panel">
+    <div class="form-container">
+
+      <div class="form-header">
+        <h2>Criar nova conta</h2>
+        <p>Preencha os dados abaixo para se registrar</p>
+      </div>
+
+      <form [formGroup]="cadastroFormulario" (ngSubmit)="aoCadastrar()" class="cadastro-form">
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>E-mail</mat-label>
+          <mat-icon matPrefix>email</mat-icon>
+          <input matInput type="email" formControlName="login" placeholder="seu@email.com" />
+          @if (cadastroFormulario.get('login')?.hasError('required') && cadastroFormulario.get('login')?.touched) {
+            <mat-error>O e-mail é obrigatório</mat-error>
+          }
+          @if (cadastroFormulario.get('login')?.hasError('email') && cadastroFormulario.get('login')?.touched) {
+            <mat-error>Informe um e-mail válido</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Senha</mat-label>
+          <mat-icon matPrefix>lock_outline</mat-icon>
+          <input matInput [type]="senhaVisivel ? 'text' : 'password'" formControlName="senha" placeholder="Mínimo 6 caracteres" />
+          <button mat-icon-button matSuffix type="button" (click)="senhaVisivel = !senhaVisivel">
+            <mat-icon>{{ senhaVisivel ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+          @if (cadastroFormulario.get('senha')?.hasError('required') && cadastroFormulario.get('senha')?.touched) {
+            <mat-error>A senha é obrigatória</mat-error>
+          }
+          @if (cadastroFormulario.get('senha')?.hasError('minlength') && cadastroFormulario.get('senha')?.touched) {
+            <mat-error>A senha deve ter no mínimo 6 caracteres</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Perfil de Acesso</mat-label>
+          <mat-icon matPrefix>manage_accounts</mat-icon>
+          <mat-select formControlName="role">
+            @for (perfil of perfisDisponiveis; track perfil) {
+              <mat-option [value]="perfil">{{ perfil }}</mat-option>
+            }
+          </mat-select>
+          @if (cadastroFormulario.get('role')?.hasError('required')) {
+            <mat-error>Selecione um perfil</mat-error>
+          }
+        </mat-form-field>
+
+        <div class="btn-group">
+          <button mat-stroked-button type="button" (click)="cancelar()" class="btn-cancelar">
+            Cancelar
+          </button>
+          <button mat-raised-button color="primary" type="submit"
+            [disabled]="cadastroFormulario.invalid" class="btn-cadastrar">
+            <mat-icon>person_add</mat-icon>
+            CRIAR CONTA
+          </button>
+        </div>
+
+      </form>
+
+      <div class="form-footer">
+        <span>Já tem uma conta?</span>
+        <a routerLink="/login" class="login-link">Fazer login</a>
+      </div>
+
+    </div>
+  </div>

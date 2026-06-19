@@ -61,7 +61,7 @@ public class SensorController {
             @PathVariable String id,
             @RequestBody AtualizarSensorDTO atualizar) {
 
-        atualizarSensor.executar(id, atualizar.nome());
+        atualizarSensor.executar(id, atualizar);
         return ResponseEntity.ok().build();
     }
 

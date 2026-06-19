@@ -1,4 +1,500 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/* =========================================
+   AGROTECH DESIGN SYSTEM — TOKENS
+   ========================================= */
+:root {
+  /* Brand — Verde (primário) */
+  --c-primary-900: #1B5E20;
+  --c-primary-800: #2E7D32;   /* primário: verde escuro */
+  --c-primary-700: #388E3C;
+  --c-primary-600: #4CAF50;   /* secundário: verde médio */
+  --c-primary-400: #66BB6A;
+  --c-primary-100: #C8E6C9;
+  --c-primary-50:  #E8F5E9;
+
+  /* Destaque — Âmbar */
+  --c-accent:       #FFC107;
+  --c-accent-dark:  #F9A825;
+  --c-accent-light: #FFF8E1;
+
+  /* Neutros */
+  --c-white:        #FFFFFF;
+  --c-bg:           #F5F7F5;
+  --c-surface:      #FFFFFF;
+  --c-border:       #CBD5E0;
+  --c-border-light: #E2E8F0;
+  --c-text-primary: #263238;
+  --c-text-secondary: #607D8B;
+  --c-text-muted:   #90A4AE;
+
+  /* Semântico — Status */
+  --c-danger:         #D32F2F;
+  --c-danger-bg:      #FFEBEE;
+  --c-warning:        #FF9800;
+  --c-warning-bg:     #FFF3E0;
+  --c-success:        #4CAF50;
+  --c-success-bg:     #E8F5E9;
+  --c-info:           #1976D2;
+  --c-info-bg:        #E3F2FD;
+
+  /* Layout */
+  --sidebar-w:        260px;
+  --sidebar-w-collapsed: 68px;
+  --header-h:         64px;
+
+  /* Elevação */
+  --shadow-xs: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 6px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.05);
+  --shadow-lg: 0 10px 15px rgba(0,0,0,0.08), 0 4px 6px rgba(0,0,0,0.04);
+
+  /* Bordas */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+
+  /* Transições */
+  --t-fast: 150ms ease;
+  --t-base: 250ms ease;
+  --t-slow: 380ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* =========================================
+   RESET & BASE
+   ========================================= */
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', 'Roboto', 'Helvetica Neue', sans-serif;
+  background-color: var(--c-bg);
+  color: var(--c-text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 15px;  /* aumentado de 14px para melhor legibilidade */
+  line-height: 1.6;
+}
+
+/* =========================================
+   SCROLLBAR
+   ========================================= */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--c-border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--c-text-muted); }
+
+/* =========================================
+   ANGULAR MATERIAL — TEMA VERDE / ÂMBAR
+   ========================================= */
+
+/* Toolbar primary → verde escuro */
+.mat-toolbar.mat-primary,
+.mat-toolbar[color="primary"] {
+  background-color: var(--c-primary-800) !important;
+  color: #ffffff !important;
+}
+
+/* Botões primary (filled) → verde médio */
+.mat-mdc-unelevated-button.mat-primary,
+.mat-mdc-raised-button.mat-primary,
+.mat-mdc-fab.mat-primary,
+.mat-mdc-mini-fab.mat-primary {
+  --mdc-filled-button-container-color: var(--c-primary-600) !important;
+  --mdc-filled-button-label-text-color: #ffffff !important;
+  --mdc-protected-button-container-color: var(--c-primary-600) !important;
+  --mdc-protected-button-label-text-color: #ffffff !important;
+  --mdc-fab-container-color: var(--c-primary-600) !important;
+  background-color: var(--c-primary-600) !important;
+  color: #ffffff !important;
+}
+
+.mat-mdc-unelevated-button.mat-primary:hover,
+.mat-mdc-raised-button.mat-primary:hover {
+  background-color: var(--c-primary-700) !important;
+}
+
+/* Botões com color="accent" → âmbar */
+.mat-mdc-unelevated-button.mat-accent,
+.mat-mdc-raised-button.mat-accent,
+.mat-mdc-fab.mat-accent,
+.mat-mdc-mini-fab.mat-accent {
+  --mdc-filled-button-container-color: var(--c-accent) !important;
+  --mdc-filled-button-label-text-color: #263238 !important;
+  background-color: var(--c-accent) !important;
+  color: #263238 !important;
+}
+
+/* Botões stroked com accent → borda + texto verde */
+.mat-mdc-outlined-button.mat-primary,
+.mat-mdc-button.mat-primary {
+  --mdc-outlined-button-label-text-color: var(--c-primary-800) !important;
+  --mdc-text-button-label-text-color: var(--c-primary-800) !important;
+  color: var(--c-primary-800) !important;
+}
+
+.mat-mdc-outlined-button.mat-accent,
+.mat-mdc-button.mat-accent {
+  --mdc-outlined-button-label-text-color: #263238 !important;
+  --mdc-text-button-label-text-color: #263238 !important;
+  color: #263238 !important;
+  border-color: var(--c-accent) !important;
+}
+
+/* Stroked geral: borda verde, texto verde */
+.mat-mdc-outlined-button:not([color]) {
+  --mdc-outlined-button-outline-color: var(--c-primary-800) !important;
+  --mdc-outlined-button-label-text-color: var(--c-primary-800) !important;
+}
+
+/* Slide Toggle → verde quando ativo */
+.mat-mdc-slide-toggle.mat-primary .mdc-switch:enabled .mdc-switch__shadow {
+  background-color: var(--c-primary-600) !important;
+}
+.mat-mdc-slide-toggle .mdc-switch--selected .mdc-switch__handle::after {
+  background-color: var(--c-primary-600) !important;
+}
+.mat-mdc-slide-toggle .mdc-switch--selected .mdc-switch__track::after {
+  background-color: var(--c-primary-200, #A5D6A7) !important;
+}
+
+/* Progress bar → verde */
+.mat-mdc-progress-bar .mdc-linear-progress__bar-inner {
+  border-color: var(--c-primary-600) !important;
+}
+
+/* Checkbox / Radio → verde */
+.mat-mdc-checkbox.mat-primary .mdc-checkbox__background {
+  border-color: var(--c-primary-800) !important;
+}
+.mat-mdc-checkbox.mat-primary .mdc-checkbox--selected .mdc-checkbox__background {
+  background-color: var(--c-primary-800) !important;
+}
+
+/* Tabs → verde */
+.mat-mdc-tab-group.mat-primary .mat-mdc-tab .mdc-tab-indicator__content--underline,
+.mat-mdc-tab.mat-primary .mdc-tab-indicator__content--underline {
+  border-color: var(--c-primary-600) !important;
+}
+.mat-mdc-tab-group .mat-mdc-tab.mdc-tab--active .mdc-tab__text-label {
+  color: var(--c-primary-800) !important;
+}
+.mat-mdc-tab-group .mdc-tab-indicator__content--underline {
+  border-color: var(--c-primary-600) !important;
+}
+
+/* Ripple → verde */
+.mat-mdc-button .mat-ripple-element,
+.mat-mdc-raised-button .mat-ripple-element,
+.mat-mdc-unelevated-button .mat-ripple-element {
+  background-color: rgba(76, 175, 80, 0.12) !important;
+}
+
+/* =========================================
+   ANGULAR MATERIAL — OVERRIDES GLOBAIS
+   ========================================= */
+
+/* Card: fundo claro e cor de texto acessível independente do tema */
+.mat-mdc-card {
+  border-radius: var(--radius-md) !important;
+  box-shadow: var(--shadow-sm) !important;
+  border: 1px solid var(--c-border) !important;
+  background-color: var(--c-surface) !important;
+  color: var(--c-text-primary) !important;
+}
+
+/* Header: alinhamento no topo para subtítulo longo não colapsar */
+.mat-mdc-card-header {
+  align-items: flex-start !important;
+  padding: 20px 20px 12px !important;
+}
+
+/* Área de texto do header: ocupa o espaço restante sem truncar */
+.mat-mdc-card-header-text {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Título do card: visível, sem truncamento */
+.mat-mdc-card-title {
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  color: var(--c-text-primary) !important;
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: unset !important;
+  line-height: 1.35 !important;
+  margin-bottom: 0 !important;
+}
+
+/* Subtítulo do card: cor secundária e quebra de linha liberada */
+.mat-mdc-card-subtitle {
+  font-size: 0.8rem !important;
+  font-weight: 400 !important;
+  color: var(--c-text-secondary) !important;
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: unset !important;
+  line-height: 1.4 !important;
+  margin-top: 0 !important;
+}
+
+/* Conteúdo e ações: cor herdada do card */
+.mat-mdc-card-content,
+.mat-mdc-card-actions {
+  color: var(--c-text-primary) !important;
+}
+
+/* =========================================
+   ANGULAR MATERIAL — TABELAS (mat-table)
+   ========================================= */
+
+/* Container: sempre fundo branco */
+.mat-mdc-table {
+  background-color: var(--c-surface) !important;
+  color: var(--c-text-primary) !important;
+  width: 100% !important;
+}
+
+/* Linha de cabeçalho */
+.mat-mdc-header-row {
+  background-color: var(--c-bg) !important;
+  min-height: 52px !important;
+}
+
+/* Célula de cabeçalho: texto escuro, legível */
+.mat-mdc-header-cell {
+  background-color: var(--c-bg) !important;
+  color: var(--c-text-primary) !important;
+  font-size: 0.8rem !important;
+  font-weight: 700 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid var(--c-border) !important;
+  padding: 0 16px !important;
+}
+
+/* Linha de dados */
+.mat-mdc-row {
+  background-color: var(--c-surface) !important;
+  transition: background-color var(--t-fast);
+  min-height: 52px !important;
+}
+
+.mat-mdc-row:hover {
+  background-color: var(--c-primary-50) !important;
+}
+
+/* Célula de dados: texto escuro com tamanho legível */
+.mat-mdc-cell {
+  color: var(--c-text-primary) !important;
+  font-size: 0.9rem !important;
+  border-bottom: 1px solid var(--c-border-light) !important;
+  padding: 0 16px !important;
+}
+
+/* Linha sem dados */
+.mat-mdc-no-data-row {
+  background-color: var(--c-surface) !important;
+  color: var(--c-text-muted) !important;
+}
+
+/* =========================================
+   ANGULAR MATERIAL — TOOLBAR
+   ========================================= */
+
+/* Toolbar com accent (ex: sensor-list) → fundo claro do sistema */
+.mat-toolbar[color="accent"],
+.mat-toolbar.mat-accent {
+  background-color: var(--c-surface) !important;
+  color: var(--c-text-primary) !important;
+  border: 1px solid var(--c-border) !important;
+}
+
+/* =========================================
+   ANGULAR MATERIAL — SELECT / DROPDOWN
+   ========================================= */
+
+/* Painel flutuante de opções */
+.mat-mdc-select-panel,
+.mdc-menu-surface {
+  background-color: var(--c-surface) !important;
+  border: 1px solid var(--c-border) !important;
+  border-radius: var(--radius-sm) !important;
+  box-shadow: var(--shadow-lg) !important;
+}
+
+/* Cada opção */
+.mat-mdc-option {
+  color: var(--c-text-primary) !important;
+}
+
+.mat-mdc-option .mdc-list-item__primary-text {
+  color: var(--c-text-primary) !important;
+}
+
+.mat-mdc-option:hover:not(.mdc-list-item--disabled) {
+  background-color: var(--c-primary-50) !important;
+}
+
+.mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled) {
+  background-color: var(--c-primary-50) !important;
+  color: var(--c-primary-800) !important;
+}
+
+.mat-mdc-option.mdc-list-item--selected .mdc-list-item__primary-text {
+  color: var(--c-primary-800) !important;
+}
+
+.mat-mdc-form-field {
+  width: 100%;
+}
+
+/* =========================================
+   UTILITÁRIOS
+   ========================================= */
+.full-width { width: 100%; }
+
+.page-wrapper {
+  padding: 28px;
+  max-width: 1400px;
+}
+
+.page-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--c-text-primary);
+  margin: 0 0 4px;
+}
+
+.page-subtitle {
+  font-size: 0.95rem;
+  color: var(--c-text-secondary);
+  margin: 0 0 24px;
+}
+
+.badge-critico {
+  background: var(--c-danger-bg);
+  color: var(--c-danger);
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.badge-atencao {
+  background: var(--c-warning-bg);
+  color: var(--c-warning);
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.badge-normal {
+  background: var(--c-success-bg);
+  color: var(--c-success);
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* Status chip */
+.chip-online {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--c-success-bg);
+  color: var(--c-success);
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.chip-offline {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #FAFAFA;
+  color: var(--c-text-muted);
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border: 1px solid var(--c-border);
+}
+
+.chip-online::before,
+.chip-offline::before {
+  content: '';
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+
+.chip-online::before { background: var(--c-success); }
+.chip-offline::before { background: var(--c-text-muted); }
+
+/* Empty state */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 64px 24px;
+  color: var(--c-text-muted);
+  text-align: center;
+}
+
+.empty-state mat-icon {
+  font-size: 56px;
+  width: 56px;
+  height: 56px;
+  opacity: 0.3;
+  margin-bottom: 16px;
+}
+
+.empty-state p {
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+/* Skeleton loading */
+.skeleton {
+  background: linear-gradient(90deg, var(--c-border-light) 25%, var(--c-border) 50%, var(--c-border-light) 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s infinite;
+  border-radius: var(--radius-sm);
+}
+
+@keyframes skeleton-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Animação de entrada das páginas */
+@media (prefers-reduced-motion: no-preference) {
+  .page-wrapper {
+    animation: fadeSlideIn 0.3s ease forwards;
+  }
+
+  @keyframes fadeSlideIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+}
