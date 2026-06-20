@@ -1,57 +1,96 @@
-<div class="regra-wrapper">
-  <div class="regra-header">
-    <h2>Gestão de Regras</h2>
-    <button mat-raised-button color="primary" routerLink="/regras/nova">
-      <mat-icon>add</mat-icon> Nova Regra
-    </button>
+<div class="page-container">
+
+  <div class="regra-wrapper">
+
+    <!-- HEADER -->
+    <div class="regra-header">
+      <h2>Gestão de Regras</h2>
+
+      <button mat-raised-button color="primary" routerLink="/regras/nova">
+        <mat-icon>add</mat-icon>
+        Nova Regra
+      </button>
+    </div>
+
+    <!-- TABELA CARD -->
+    <div class="table-container">
+
+      <table mat-table [dataSource]="regras" class="mat-elevation-z2">
+
+        <ng-container matColumnDef="tipoSensor">
+          <th mat-header-cell *matHeaderCellDef>Tipo Sensor</th>
+          <td mat-cell *matCellDef="let regra">
+            {{ regra.tipoSensor }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="operador">
+          <th mat-header-cell *matHeaderCellDef>Condição</th>
+          <td mat-cell *matCellDef="let regra">
+            {{ regra.operador }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="valor">
+          <th mat-header-cell *matHeaderCellDef>Valor Limite</th>
+          <td mat-cell *matCellDef="let regra">
+            {{ regra.valor }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="ativo">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let regra">
+            <span [ngClass]="regra.ativo ? 'status-ativo' : 'status-inativo'">
+              {{ regra.ativo ? 'ATIVA' : 'INATIVA' }}
+            </span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="acoes">
+          <th mat-header-cell *matHeaderCellDef>Ações</th>
+          <td mat-cell *matCellDef="let regra">
+
+            @if (regra.ativo) {
+              <button mat-icon-button color="warn"
+                      (click)="desativar(regra.id)"
+                      matTooltip="Desativar regra">
+                <mat-icon>toggle_on</mat-icon>
+              </button>
+            } @else {
+              <button mat-icon-button color="primary"
+                      (click)="ativar(regra.id)"
+                      matTooltip="Ativar regra">
+                <mat-icon>toggle_off</mat-icon>
+              </button>
+            }
+
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="colunas"></tr>
+        <tr mat-row *matRowDef="let row; columns: colunas;"></tr>
+
+      </table>
+
+    </div>
+
+    <!-- INFO -->
+    <div class="regra-info">
+      <h4>Como funcionam as regras</h4>
+
+      <p>
+        As regras são avaliadas automaticamente com base nos dados dos sensores.
+        Quando a condição definida é atingida, o sistema pode executar ações automaticamente.
+      </p>
+
+      <ul>
+        <li><b>ATIVA</b> → A regra está sendo monitorada e pode disparar ações</li>
+        <li><b>INATIVA</b> → A regra não é executada pelo sistema</li>
+        <li><b>Condição</b> → Define quando a regra será disparada</li>
+      </ul>
+    </div>
+
   </div>
 
-  <table mat-table [dataSource]="regras" class="mat-elevation-z2">
-
-    <ng-container matColumnDef="tipoSensor">
-      <th mat-header-cell *matHeaderCellDef>Tipo Sensor</th>
-      <td mat-cell *matCellDef="let regra">{{ regra.tipoSensor }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="operador">
-      <th mat-header-cell *matHeaderCellDef>Condição</th>
-      <td mat-cell *matCellDef="let regra">{{ regra.operador }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="valor">
-      <th mat-header-cell *matHeaderCellDef>Valor Limite</th>
-      <td mat-cell *matCellDef="let regra">{{ regra.valor }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="ativo">
-      <th mat-header-cell *matHeaderCellDef>Status</th>
-      <td mat-cell *matCellDef="let regra">
-        <span [class]="regra.ativo ? 'status-ativo' : 'status-inativo'">
-          {{ regra.ativo ? 'ATIVA' : 'INATIVA' }}
-        </span>
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="acoes">
-      <th mat-header-cell *matHeaderCellDef>Ações</th>
-      <td mat-cell *matCellDef="let regra">
-        @if (regra.ativo) {
-          <button mat-icon-button color="warn"
-            (click)="desativar(regra.id)"
-            matTooltip="Desativar regra">
-            <mat-icon>toggle_on</mat-icon>
-          </button>
-        } @else {
-          <button mat-icon-button color="primary"
-            (click)="ativar(regra.id)"
-            matTooltip="Ativar regra">
-            <mat-icon>toggle_off</mat-icon>
-          </button>
-        }
-      </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="colunas"></tr>
-    <tr mat-row *matRowDef="let row; columns: colunas;"></tr>
-  </table>
 </div>

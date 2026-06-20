@@ -37,8 +37,10 @@ public class ListarSensoresUseCase {
         List<SensorResponseDTO.LeituraResponseDTO> leiturasDTO = leituraDominio.stream()
                 .map(
                         leitura -> new SensorResponseDTO.LeituraResponseDTO(
+                                leitura.getId(),
                                 leitura.getValor(),
-                                leitura.getDataHora()
+                                leitura.getDataHora(),
+                                leitura.getLocalizacao()
                         )
                 ).collect(Collectors.toList());
 

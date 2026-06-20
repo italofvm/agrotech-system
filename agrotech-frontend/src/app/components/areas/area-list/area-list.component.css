@@ -1,5 +1,8 @@
 .area-wrapper {
   padding: 24px;
+  /* Centraliza o container horizontalmente */
+  max-width: 900px; /* Ajuste este valor conforme sua preferência de largura */
+  margin: 0 auto;   /* O "auto" nas laterais faz a centralização */
 }
 
 .area-header {
@@ -16,6 +19,13 @@
   margin: 0;
 }
 
-table {
+/* Garante que a tabela ocupe 100% do container centralizado */
+.area-table {
   width: 100%;
+}
+
+/* Opcional: Melhora o visual das células da tabela */
+.mat-column-acoes {
+  width: 120px;
+  text-align: center;
 }

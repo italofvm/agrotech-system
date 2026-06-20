@@ -1,5 +1,8 @@
 .alerta-wrapper {
   padding: 24px;
+  /* Centraliza o grid e limita a largura máxima */
+  max-width: 1100px;
+  margin: 0 auto;
 }
 
 .alerta-header {
