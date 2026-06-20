@@ -29,3 +29,28 @@ table {
   color: var(--c-danger);
   font-weight: bold;
 }
+
+/* ==========================================
+   RESPONSIVIDADE MOBILE
+   ========================================== */
+@media (max-width: 600px) {
+  .regra-wrapper {
+    padding: 14px 12px;
+  }
+
+  .regra-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .regra-header h2 {
+    font-size: 1.2rem;
+  }
+
+  table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}

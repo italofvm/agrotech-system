@@ -46,10 +46,19 @@ export class AlertaListComponent implements OnInit {
     });
   }
 
-  resolver(id: string): void {
+  resolver(id: string, event: Event): void {
+    event.stopPropagation();
     this.alertaService.resolver(id).subscribe({
       next: () => this.carregarAlertas(),
       error: (erro) => console.error('Erro ao resolver alerta:', erro),
+    });
+  }
+
+  reabrir(id: string, event: Event): void {
+    event.stopPropagation();
+    this.alertaService.reabrir(id).subscribe({
+      next: () => this.carregarAlertas(),
+      error: (erro) => console.error('Erro ao reabrir alerta:', erro),
     });
   }
 }

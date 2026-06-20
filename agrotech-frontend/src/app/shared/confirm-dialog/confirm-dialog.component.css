@@ -1,0 +1,28 @@
+.dialog-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.dialog-icon {
+  color: #f59e0b;
+  font-size: 1.4rem;
+  height: 1.4rem;
+  width: 1.4rem;
+}
+
+.dialog-content p {
+  color: #555;
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.dialog-actions {
+  gap: 8px;
+  padding-bottom: 16px;
+  padding-right: 16px;
+}

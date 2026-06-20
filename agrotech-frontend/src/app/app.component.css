@@ -425,22 +425,69 @@
 /* ==========================================
    RESPONSIVIDADE
    ========================================== */
+
+/* Ocultar hamburguer em desktop — deve vir ANTES do media query */
+.mobile-menu-btn {
+  display: none !important;
+}
+
+/* Backdrop (visível apenas em mobile quando sidebar aberta) */
+.sidebar-backdrop {
+  display: none;
+}
+
 @media (max-width: 900px) {
+  /* Sidebar: drawer sobreposto */
   .sidebar {
     position: fixed;
     left: 0;
     top: 0;
     z-index: 200;
-    transform: translateX(0);
+    transform: translateX(-100%);
+    width: var(--sidebar-w) !important;
     box-shadow: var(--shadow-lg);
+    transition: transform var(--t-slow);
   }
 
-  .app-shell.sidebar-collapsed .sidebar {
-    transform: translateX(-100%);
-    width: var(--sidebar-w);
+  /* Sidebar aberta em mobile */
+  .app-shell:not(.sidebar-collapsed) .sidebar {
+    transform: translateX(0);
+  }
+
+  /* Botão hamburguer visível apenas em mobile */
+  .mobile-menu-btn {
+    display: flex !important;
+  }
+
+  /* Backdrop */
+  .sidebar-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 199;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--t-base);
+  }
+
+  .sidebar-backdrop.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  /* Main area ocupa tudo (sidebar não empurra) */
+  .main-area {
+    width: 100%;
+  }
+
+  /* Não mostrar o toggle da sidebar na desktop (chevron) */
+  .sidebar-toggle {
+    display: flex;
   }
 
   .page-content {
-    padding: 16px;
+    padding: 0;
   }
 }
+

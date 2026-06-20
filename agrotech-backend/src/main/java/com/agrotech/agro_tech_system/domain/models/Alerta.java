@@ -52,6 +52,10 @@ public class Alerta {
         this.status = StatusAlerta.RESOLVIDO;
     }
 
+    public void reabrir() {
+        this.status = StatusAlerta.ATIVO;
+    }
+
     public boolean isAtivo() {
         return this.status == StatusAlerta.ATIVO;
     }

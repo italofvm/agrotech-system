@@ -6,6 +6,7 @@ import java.util.Arrays;
 
 import org.springframework.context.annotation.*;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.*;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -15,6 +16,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -31,22 +33,26 @@ public class SecurityConfiguration {
        
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        AuthenticationEntryPoint unauthorizedHandler = (request, response, ex) ->
+                response.sendError(HttpStatus.UNAUTHORIZED.value(), "Não autorizado");
+
         return http
-	        .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-	        .csrf(csrf -> csrf.disable())
-	        .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-	        .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                .requestMatchers("/h2-console/**").permitAll()
-                .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                .requestMatchers(HttpMethod.POST, "/cadastro").permitAll()
-                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/alertas/stream").permitAll()
-                .anyRequest().authenticated()
-	        )	        
-	        .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()))
-	        .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)
-	        .build();
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .csrf(csrf -> csrf.disable())
+                .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .exceptionHandling(ex -> ex.authenticationEntryPoint(unauthorizedHandler))
+                .authorizeHttpRequests(auth -> auth
+                    .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                    .requestMatchers("/h2-console/**").permitAll()
+                    .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+                    .requestMatchers(HttpMethod.POST, "/cadastro").permitAll()
+                    .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/alertas/stream").permitAll()
+                    .anyRequest().authenticated()
+                )
+                .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()))
+                .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)
+                .build();
     }
 
     @Bean

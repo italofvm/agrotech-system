@@ -11,7 +11,9 @@ export class UsuarioService {
   private readonly apiURL = 'http://localhost:8080';
 
   private _estaLogado = signal<boolean>(this.verificarToken());
+  private _role = signal<string | null>(this.obterRole());
   public logado = computed(() => this._estaLogado());
+  public role = computed(() => this._role());
 
   constructor() {}
 
@@ -25,6 +27,7 @@ export class UsuarioService {
         tap(resposta => {
           localStorage.setItem('token', resposta.token);
           this._estaLogado.set(true);
+          this._role.set(this.obterRole());
         })
       );
   }
@@ -34,7 +37,20 @@ export class UsuarioService {
   }
 
   private verificarToken(): boolean {
-    return !!localStorage.getItem('token');
+    const token = localStorage.getItem('token');
+    if (!token) return false;
+
+    try {
+      const decoded: any = jwtDecode(token);
+      if (decoded.exp && decoded.exp * 1000 < Date.now()) {
+        localStorage.removeItem('token');
+        return false;
+      }
+      return true;
+    } catch {
+      localStorage.removeItem('token');
+      return false;
+    }
   }
 
   obterToken(): string | null {
@@ -47,9 +63,11 @@ export class UsuarioService {
 
     try {
       const decode: any = jwtDecode(token);
+      if (decode.exp && decode.exp * 1000 < Date.now()) {
+        return null;
+      }
       return decode.role || null;
     } catch {
-      this.logout();
       return null;
     }
   }
@@ -57,5 +75,6 @@ export class UsuarioService {
   logout(): void {
     localStorage.removeItem('token');
     this._estaLogado.set(false);
+    this._role.set(null);
   }
 }

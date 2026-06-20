@@ -154,7 +154,7 @@
 /* ---- Sensor Grid ---- */
 .sensor-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(360px, 100%), 1fr));
   gap: 20px;
 }
 
@@ -307,6 +307,46 @@ small {
   color: #666;
   font-style: italic;
 }
+
+/* ==========================================
+   RESPONSIVIDADE MOBILE
+   ========================================== */
+@media (max-width: 600px) {
+  .kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .kpi-card {
+    padding: 14px 12px;
+    gap: 10px;
+  }
+
+  .kpi-icon-wrap {
+    width: 40px;
+    height: 40px;
+  }
+
+  .kpi-value {
+    font-size: 1.4rem;
+  }
+
+  .sensor-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .dash-header {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .dash-header-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
+
 
 .readings-recentes-label {
   font-size: 0.72rem;

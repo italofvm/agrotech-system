@@ -25,3 +25,23 @@
 }
 
 /* Cor controlada pelo override global em styles.css via --c-text-primary */
+
+@media (max-width: 600px) {
+  .form-wrapper {
+    padding: 20px 12px;
+    align-items: flex-start;
+  }
+
+  .form-card {
+    max-width: 100%;
+    padding: 16px;
+  }
+
+  .button-group {
+    flex-direction: column-reverse;
+  }
+
+  .button-group button {
+    width: 100%;
+  }
+}

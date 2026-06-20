@@ -2,6 +2,9 @@
   <!-- Shell autenticado: Sidebar + Header + Conteúdo -->
   <div class="app-shell" [class.sidebar-collapsed]="!sidebarAberta()">
 
+    <!-- Backdrop mobile -->
+    <div class="sidebar-backdrop" [class.active]="sidebarAberta()" (click)="toggleSidebar()"></div>
+
     <!-- ====== SIDEBAR ====== -->
     <aside class="sidebar">
       <div class="sidebar-header">
@@ -56,6 +59,9 @@
       <!-- Header fixo -->
       <header class="app-header">
         <div class="header-left">
+          <button class="header-menu-btn mobile-menu-btn" (click)="toggleSidebar()" aria-label="Abrir menu">
+            <mat-icon>menu</mat-icon>
+          </button>
           <span class="header-brand">AgroTech System</span>
         </div>
         <div class="header-right">

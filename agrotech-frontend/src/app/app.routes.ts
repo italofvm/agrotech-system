@@ -53,8 +53,8 @@ export const routes: Routes = [
     canActivate: [authGuard],
     children: [
       { path: '', component: AreaListComponent },
-      { path: 'nova', component: AreaFormComponent },
-      { path: 'editar/:id', component: AreaFormComponent },
+      { path: 'nova', component: AreaFormComponent, canActivate: [adminGuard] },
+      { path: 'editar/:id', component: AreaFormComponent, canActivate: [adminGuard] },
     ],
   },
 

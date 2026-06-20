@@ -1,0 +1,17 @@
+<h2 mat-dialog-title class="dialog-title">
+  <mat-icon class="dialog-icon">help_outline</mat-icon>
+  {{ data.titulo }}
+</h2>
+
+<mat-dialog-content class="dialog-content">
+  <p>{{ data.mensagem }}</p>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="dialog-actions">
+  <button mat-stroked-button (click)="cancelar()">
+    {{ data.textoBotaoCancelar ?? 'Cancelar' }}
+  </button>
+  <button mat-raised-button color="primary" (click)="confirmar()">
+    {{ data.textoBotaoConfirmar ?? 'Confirmar' }}
+  </button>
+</mat-dialog-actions>

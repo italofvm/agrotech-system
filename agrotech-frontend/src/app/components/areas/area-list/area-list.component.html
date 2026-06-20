@@ -1,9 +1,11 @@
 <div class="area-wrapper">
   <div class="area-header">
     <h2>Gestão de Áreas</h2>
-    <button mat-raised-button color="primary" routerLink="/areas/nova">
-      <mat-icon>add</mat-icon> Nova Área
-    </button>
+    @if (ehAdmin()) {
+      <button mat-raised-button color="primary" routerLink="/areas/nova">
+        <mat-icon>add</mat-icon> Nova Área
+      </button>
+    }
   </div>
 
   <table mat-table [dataSource]="areas" class="mat-elevation-z2">
@@ -18,19 +20,31 @@
       <td mat-cell *matCellDef="let area">{{ area.descricao || '—' }}</td>
     </ng-container>
 
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef>Estado</th>
+      <td mat-cell *matCellDef="let area">
+        <span class="status-badge" [class.ativa]="area.ativo" [class.inativa]="!area.ativo">
+          {{ area.ativo ? 'ATIVA' : 'INATIVA' }}
+        </span>
+      </td>
+    </ng-container>
+
     <ng-container matColumnDef="acoes">
       <th mat-header-cell *matHeaderCellDef>Ações</th>
       <td mat-cell *matCellDef="let area">
-        <button mat-icon-button color="primary"
-          [routerLink]="['/areas/editar', area.id]"
-          matTooltip="Editar área">
-          <mat-icon>edit</mat-icon>
-        </button>
-        <button mat-icon-button color="warn"
-          (click)="deletar(area.id)"
-          matTooltip="Deletar área">
-          <mat-icon>delete</mat-icon>
-        </button>
+        @if (ehAdmin()) {
+          <button mat-icon-button color="primary"
+            [routerLink]="['/areas/editar', area.id]"
+            matTooltip="Editar área">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button
+            [color]="area.ativo ? 'warn' : 'accent'"
+            (click)="toggleAtivo(area)"
+            [matTooltip]="area.ativo ? 'Desativar área' : 'Ativar área'">
+            <mat-icon>{{ area.ativo ? 'toggle_on' : 'toggle_off' }}</mat-icon>
+          </button>
+        }
       </td>
     </ng-container>
 

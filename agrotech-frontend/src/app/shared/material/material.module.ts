@@ -1,4 +1,5 @@
 
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -43,6 +44,7 @@ import { NgModule } from '@angular/core';
     MatBadgeModule,
     MatTabsModule,
     MatPaginatorModule,
+    MatDialogModule,
   ],
 })
 

@@ -29,4 +29,8 @@ export class AreaService {
   deletar(id: string): Observable<void> {
     return this.http.delete<void>(`${this.apiURL}/${id}`);
   }
+
+  toggleAtivo(id: string): Observable<void> {
+    return this.http.patch<void>(`${this.apiURL}/${id}/toggle`, {});
+  }
 }

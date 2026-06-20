@@ -39,3 +39,31 @@ table {
   color: var(--c-success);
   font-weight: bold;
 }
+
+/* ==========================================
+   RESPONSIVIDADE MOBILE
+   ========================================== */
+@media (max-width: 600px) {
+  .alerta-wrapper {
+    padding: 14px 12px;
+  }
+
+  .alerta-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .alerta-header h2 {
+    font-size: 1.2rem;
+  }
+
+  .filtro-group {
+    flex-wrap: wrap;
+  }
+
+  .tabela-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}

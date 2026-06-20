@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
@@ -7,7 +7,9 @@ import { SensorService } from '../../../services/sensor.service';
 import { SensorModel } from '../../../models/sensor.model';
 import { UsuarioService } from '../../../services/usuario.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
 import { UserRoleModel } from '../../../models/user-role.model';
+import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-sensor-list',
@@ -25,10 +27,11 @@ export class SensorListComponent implements OnInit {
   private usuarioService = inject(UsuarioService);
   private destroyRef = inject(DestroyRef);
   private snackBar = inject(MatSnackBar);
+  private dialog = inject(MatDialog);
 
   listaDeSensores = signal<SensorModel[]>([]);
   estaCarregando = signal<boolean>(false);
-  ehAdmin = signal<boolean>(this.usuarioService.obterRole() === UserRoleModel.ADMIN);
+  ehAdmin = computed(() => this.usuarioService.role() === UserRoleModel.ADMIN);
 
   colunasTabela: string[] = ['nome', 'tipo', 'localizacao', 'status', 'acoes'];
 
@@ -49,15 +52,27 @@ export class SensorListComponent implements OnInit {
     });
   }
 
-  excluirSensor(id: string): void {
-    if (confirm('Tem certeza que deseja excluir este sensor?')) {
-      this.sensorService.deletar(id).subscribe({
+  toggleSensor(sensor: SensorModel): void {
+    const acao = sensor.ativo ? 'desativar' : 'ativar';
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: {
+        titulo: sensor.ativo ? 'Desativar Sensor' : 'Ativar Sensor',
+        mensagem: `Deseja ${acao} o sensor "${sensor.nome}"?`,
+        textoBotaoConfirmar: sensor.ativo ? 'Desativar' : 'Ativar',
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((confirmado: boolean) => {
+      if (!confirmado) return;
+      this.sensorService.toggleAtivo(sensor.id).subscribe({
         next: () => {
+          this.snackBar.open(`Sensor ${acao === 'ativar' ? 'ativado' : 'desativado'} com sucesso.`, 'Fechar', { duration: 3000 });
           this.carregarDadosSensores();
         },
-        error: () => this.snackBar.open('Erro ao excluir sensor.', 'Fechar', { duration: 3000 })
+        error: () => this.snackBar.open(`Erro ao ${acao} sensor.`, 'Fechar', { duration: 3000 })
       });
-    }
+    });
   }
 
   alterarLocalizacao(sensor: SensorModel): void {
