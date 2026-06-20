@@ -38,6 +38,10 @@ export class SensorService {
     return this.http.delete<void>(`${this.apiURL}/${id}`);
   }
 
+  toggleAtivo(id: string): Observable<void> {
+    return this.http.patch<void>(`${this.apiURL}/${id}/toggle`, {});
+  }
+
   buscarComLeituras(id: string): Observable<SensorComLeituras> {
     return this.http.get<SensorModel>(`${this.apiURL}/${id}`).pipe(
       map(s => ({

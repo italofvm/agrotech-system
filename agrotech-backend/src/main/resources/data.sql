@@ -2,8 +2,8 @@
 -- DADOS MOCKADOS PARA TESTES - AgroTech System
 -- ============================================================
 -- Credenciais de acesso:
---   admin  / senha: password  (ROLE: ADMIN)
---   usuario / senha: password  (ROLE: USER)
+--   admin@agrotech.com  / senha: password  (ROLE: ADMIN)
+--   usuario@agrotech.com / senha: password  (ROLE: USER)
 -- ============================================================
 
 
@@ -11,22 +11,22 @@
 -- USUÁRIOS
 -- ============================================================
 INSERT INTO usuarios (id, login, senha, role) VALUES
-  ('u100-0000-0000-0000-000000000001', 'admin',
+  ('u100-0000-0000-0000-000000000001', 'admin@agrotech.com',
    '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'ADMIN'),
-  ('u100-0000-0000-0000-000000000002', 'usuario',
+  ('u100-0000-0000-0000-000000000002', 'usuario@agrotech.com',
    '$2a$10$dXJ3SW6G7P50lGmMkkmwe.20cQQubK3.HZWzG3YB1tlRy.fqvM/BG', 'USER');
 
 
 -- ============================================================
 -- ÁREAS
 -- ============================================================
-INSERT INTO areas (id, nome, descricao) VALUES
+INSERT INTO areas (id, nome, descricao, ativo) VALUES
   ('a100-0000-0000-0000-000000000001', 'Estufa A',
-   'Estufa principal de cultivo de hortaliças'),
+   'Estufa principal de cultivo de hortaliças', TRUE),
   ('a100-0000-0000-0000-000000000002', 'Estufa B',
-   'Estufa de mudas e plantas jovens'),
+   'Estufa de mudas e plantas jovens', TRUE),
   ('a100-0000-0000-0000-000000000003', 'Campo Sul',
-   'Área aberta para cultivo de grãos e oleaginosas');
+   'Área aberta para cultivo de grãos e oleaginosas', TRUE);
 
 
 -- ============================================================

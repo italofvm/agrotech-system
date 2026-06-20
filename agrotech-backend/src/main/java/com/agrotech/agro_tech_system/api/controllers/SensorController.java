@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -21,6 +22,7 @@ import com.agrotech.agro_tech_system.application.usecase.sensor.AtualizarSensorU
 import com.agrotech.agro_tech_system.application.usecase.sensor.CadastrarSensorUseCase;
 import com.agrotech.agro_tech_system.application.usecase.sensor.DeletarSensores;
 import com.agrotech.agro_tech_system.application.usecase.sensor.ListarSensoresUseCase;
+import com.agrotech.agro_tech_system.application.usecase.sensor.ToggleSensorUseCase;
 
 import lombok.RequiredArgsConstructor;
 
@@ -33,6 +35,7 @@ public class SensorController {
     private final ListarSensoresUseCase listarSensores;
     private final AtualizarSensorUseCase atualizarSensor;
     private final DeletarSensores deletarSensor;
+    private final ToggleSensorUseCase toggleSensor;
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
@@ -71,5 +74,13 @@ public class SensorController {
     public ResponseEntity<Void> deletar(@PathVariable String id) {
         deletarSensor.executar(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}/toggle")
+    @PreAuthorize("hasRole('ADMIN')")
+    @Operation(operationId = "toggleSensor")
+    public ResponseEntity<Void> toggle(@PathVariable String id) {
+        toggleSensor.executar(id);
+        return ResponseEntity.ok().build();
     }
 }

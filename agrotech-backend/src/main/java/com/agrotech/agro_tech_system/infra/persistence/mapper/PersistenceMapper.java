@@ -18,11 +18,11 @@ public class PersistenceMapper {
     private PersistenceMapper() {}
 
     public static AreaEntity toEntity(Area area) {
-        return new AreaEntity(area.getId(), area.getNome(), area.getDescricao(), null);
+        return new AreaEntity(area.getId(), area.getNome(), area.getDescricao(), area.isAtivo(), null);
     }
 
     public static Area toDomain(AreaEntity entity) {
-        return new Area(entity.getId(), entity.getNome(), entity.getDescricao());
+        return new Area(entity.getId(), entity.getNome(), entity.getDescricao(), entity.isAtivo());
     }
 
     public static RegraEntity toEntity(Regra regra) {
@@ -52,7 +52,7 @@ public class PersistenceMapper {
                 entity.getId(),
                 entity.getNome(),
                 entity.getLocalizacao(),
-                true,
+                entity.isAtivo(),
                 entity.getTipo()
         );
     }

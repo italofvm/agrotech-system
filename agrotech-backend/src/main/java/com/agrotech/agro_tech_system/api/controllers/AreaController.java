@@ -13,6 +13,7 @@ import com.agrotech.agro_tech_system.application.usecase.area.AtualizarAreaUseCa
 import com.agrotech.agro_tech_system.application.usecase.area.CadastrarAreaUseCase;
 import com.agrotech.agro_tech_system.application.usecase.area.DeletarAreaUseCase;
 import com.agrotech.agro_tech_system.application.usecase.area.ListarAreasUseCase;
+import com.agrotech.agro_tech_system.application.usecase.area.ToggleAreaUseCase;
 
 import lombok.RequiredArgsConstructor;
 
@@ -25,6 +26,7 @@ public class AreaController {
     private final ListarAreasUseCase listarAreas;
     private final AtualizarAreaUseCase atualizarArea;
     private final DeletarAreaUseCase deletarArea;
+    private final ToggleAreaUseCase toggleArea;
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
@@ -60,5 +62,13 @@ public class AreaController {
     public ResponseEntity<Void> deletar(@PathVariable String id) {
         deletarArea.executar(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}/toggle")
+    @PreAuthorize("hasRole('ADMIN')")
+    @Operation(operationId = "toggleArea")
+    public ResponseEntity<Void> toggle(@PathVariable String id) {
+        toggleArea.executar(id);
+        return ResponseEntity.ok().build();
     }
 }

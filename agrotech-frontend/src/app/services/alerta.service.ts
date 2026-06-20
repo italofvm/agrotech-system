@@ -21,4 +21,8 @@ export class AlertaService {
   resolver(id: string): Observable<void> {
     return this.http.patch<void>(`${this.apiURL}/${id}/resolver`, {});
   }
+
+  reabrir(id: string): Observable<void> {
+    return this.http.patch<void>(`${this.apiURL}/${id}/reabrir`, {});
+  }
 }

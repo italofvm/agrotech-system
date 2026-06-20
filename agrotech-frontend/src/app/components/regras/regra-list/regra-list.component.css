@@ -55,21 +55,27 @@ table {
   font-weight: bold;
 }
 
-/* INFO BOX */
-.regra-info {
-  margin-top: 20px;
-  padding: 16px;
-  background: #f5f7fa;
-  border-radius: 8px;
-  border-left: 4px solid #3f51b5;
-  font-size: 14px;
-  color: #444;
-}
+/* ==========================================
+   RESPONSIVIDADE MOBILE
+   ========================================== */
+@media (max-width: 600px) {
+  .regra-wrapper {
+    padding: 14px 12px;
+  }
 
-.regra-info h4 {
-  margin: 0 0 10px 0;
-}
+  .regra-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
 
-.regra-info ul {
-  margin: 10px 0 0 18px;
+  .regra-header h2 {
+    font-size: 1.2rem;
+  }
+
+  table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
 }

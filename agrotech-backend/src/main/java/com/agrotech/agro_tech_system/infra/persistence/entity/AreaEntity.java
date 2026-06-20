@@ -25,6 +25,9 @@ public class AreaEntity {
     @Column
     private String descricao;
 
+    @Column(nullable = false)
+    private boolean ativo;
+
     @OneToMany(mappedBy = "area", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SensorEntity> sensores;
 }

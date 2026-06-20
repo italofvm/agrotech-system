@@ -19,7 +19,7 @@ export class AppComponent {
   private router                  = inject(Router);
   private alertaNotificacao       = inject(AlertaNotificacaoService);
 
-  sidebarAberta = signal<boolean>(true);
+  sidebarAberta = signal<boolean>(window.innerWidth > 900);
 
   constructor() {
     // Conecta/desconecta o SSE automaticamente conforme o estado de autenticação

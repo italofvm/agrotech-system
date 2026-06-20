@@ -17,7 +17,8 @@ public class CadastrarAreaUseCase {
         Area area = new Area(
                 null,
                 dto.nome(),
-                dto.descricao()
+                dto.descricao(),
+                true
         );
 
         return areaRepository.salvar(area);

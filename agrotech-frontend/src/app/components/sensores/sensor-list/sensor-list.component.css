@@ -75,3 +75,22 @@ table {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+/* ==========================================
+   RESPONSIVIDADE MOBILE
+   ========================================== */
+@media (max-width: 600px) {
+  .sensor-list-container {
+    padding: 14px 12px;
+  }
+
+  .table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .toolbar-header {
+    font-size: 0.95rem;
+    flex-wrap: wrap;
+  }
+}

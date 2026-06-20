@@ -33,7 +33,8 @@ public class ListarAreasUseCase {
         return new AreaResponseDTO(
                 area.getId(),
                 area.getNome(),
-                area.getDescricao()
+                area.getDescricao(),
+                area.isAtivo()
         );
     }
 }

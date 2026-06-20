@@ -77,11 +77,12 @@
 
                            <button
                                 mat-icon-button
-                                color="warn"
-                                (click) = "excluirSensor(sensor.id)"
-                                matTooltip = "Removendo sensor"
+                                [color]="sensor.ativo ? 'warn' : 'accent'"
+                                (click)="toggleSensor(sensor)"
+                                [matTooltip]="sensor.ativo ? 'Desativar sensor' : 'Ativar sensor'"
+                                *ngIf="ehAdmin()"
                            >
-                                <mat-icon>delete_forever</mat-icon>
+                                <mat-icon>{{ sensor.ativo ? 'toggle_on' : 'toggle_off' }}</mat-icon>
                            </button>
                         </td>
                     </ng-container>

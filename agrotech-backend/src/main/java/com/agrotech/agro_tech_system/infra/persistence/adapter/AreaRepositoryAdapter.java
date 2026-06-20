@@ -19,7 +19,17 @@ public class AreaRepositoryAdapter implements AreaRepository {
 /*
     @Override
     public Area salvar(Area area) {
-        var saved = jpaAreaRepository.save(PersistenceMapper.toEntity(area));
+        AreaEntity entity;
+        if (area.getId() != null) {
+            entity = jpaAreaRepository.findById(area.getId())
+                    .orElseGet(() -> PersistenceMapper.toEntity(area));
+            entity.setNome(area.getNome());
+            entity.setDescricao(area.getDescricao());
+            entity.setAtivo(area.isAtivo());
+        } else {
+            entity = PersistenceMapper.toEntity(area);
+        }
+        var saved = jpaAreaRepository.save(entity);
         return PersistenceMapper.toDomain(saved);
     }
 */
