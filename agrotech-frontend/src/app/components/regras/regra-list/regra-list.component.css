@@ -1,7 +1,20 @@
+/* CENTRALIZA TODA A PÁGINA */
+.page-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+/* CONTAINER LIMITADO (CORREÇÃO PRINCIPAL DO "FEIO") */
 .regra-wrapper {
+  width: 100%;
+  max-width: 1100px;
   padding: 24px;
 }
 
+/* HEADER */
 .regra-header {
   display: flex;
   justify-content: space-between;
@@ -16,10 +29,22 @@
   margin: 0;
 }
 
-table {
-  width: 100%;
+/* CARD DA TABELA */
+.table-container {
+  background: #fff;
+  border-radius: 10px;
+  padding: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  overflow-x: auto;
 }
 
+/* TABELA */
+table {
+  width: 100%;
+  min-width: 700px;
+}
+
+/* STATUS */
 .status-ativo {
   color: var(--c-success);
   font-weight: bold;
@@ -28,4 +53,23 @@ table {
 .status-inativo {
   color: var(--c-danger);
   font-weight: bold;
+}
+
+/* INFO BOX */
+.regra-info {
+  margin-top: 20px;
+  padding: 16px;
+  background: #f5f7fa;
+  border-radius: 8px;
+  border-left: 4px solid #3f51b5;
+  font-size: 14px;
+  color: #444;
+}
+
+.regra-info h4 {
+  margin: 0 0 10px 0;
+}
+
+.regra-info ul {
+  margin: 10px 0 0 18px;
 }
