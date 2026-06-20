@@ -13,8 +13,9 @@ public record SensorResponseDTO(
 
 ) {
     public record LeituraResponseDTO(
+        Long id,
         Double valor,
-        LocalDateTime dataHora
+        LocalDateTime dataHora,
+        String localizacao
     ) { }
-
 }

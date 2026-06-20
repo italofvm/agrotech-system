@@ -16,7 +16,7 @@ import java.util.Optional;
 public class AreaRepositoryAdapter implements AreaRepository {
 
     private final JpaAreaRepository jpaAreaRepository;
-
+/*
     @Override
     public Area salvar(Area area) {
         AreaEntity entity;
@@ -32,7 +32,32 @@ public class AreaRepositoryAdapter implements AreaRepository {
         var saved = jpaAreaRepository.save(entity);
         return PersistenceMapper.toDomain(saved);
     }
+*/
+    
+    @Override
+    public Area salvar(Area area) {
+        // Definimos explicitamente o tipo como AreaEntity
+        AreaEntity entityParaSalvar;
 
+        if (area.getId() != null && !area.getId().isBlank()) {
+            entityParaSalvar = jpaAreaRepository.findById(area.getId())
+                    .map(entityExistente -> {
+                        entityExistente.setNome(area.getNome());
+                        entityExistente.setDescricao(area.getDescricao());
+                        return entityExistente;
+                    })
+                    .orElseGet(() -> PersistenceMapper.toEntity(area));
+        } else {
+            entityParaSalvar = PersistenceMapper.toEntity(area);
+        }
+
+        // Agora o compilador sabe que 'saved' é uma AreaEntity,
+        // permitindo que o PersistenceMapper.toDomain(saved) funcione perfeitamente.
+        AreaEntity saved = jpaAreaRepository.save(entityParaSalvar);
+        
+        return PersistenceMapper.toDomain(saved);
+    }
+    
     @Override
     public Optional<Area> buscarPorId(String id) {
         return jpaAreaRepository.findById(id).map(PersistenceMapper::toDomain);

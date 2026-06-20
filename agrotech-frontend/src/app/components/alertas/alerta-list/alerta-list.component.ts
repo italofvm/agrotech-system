@@ -21,7 +21,6 @@ export class AlertaListComponent implements OnInit {
     'valorLeitura',
     'dataHora',
     'status',
-    'acoes',
   ];
 
   ngOnInit(): void {
