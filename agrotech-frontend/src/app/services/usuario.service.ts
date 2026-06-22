@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, computed, inject, signal } from '@angular/core';
+import { Injectable, computed, inject, signal, untracked } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
 
@@ -33,7 +33,14 @@ export class UsuarioService {
   }
 
   estaLogado(): boolean {
-    return this._estaLogado();
+    const valido = this.verificarToken();
+    if (!valido && this._estaLogado()) {
+      untracked(() => {
+        this._estaLogado.set(false);
+        this._role.set(null);
+      });
+    }
+    return valido;
   }
 
   private verificarToken(): boolean {

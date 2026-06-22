@@ -9,7 +9,8 @@ public record SensorResponseDTO(
     String localizacao,
     String tipo,
     boolean ativo,
-    List<LeituraResponseDTO> leituras
+    List<LeituraResponseDTO> leituras,
+    List<HistoricoLocalizacaoDTO> historico
 
 ) {
     public record LeituraResponseDTO(
@@ -17,5 +18,12 @@ public record SensorResponseDTO(
         Double valor,
         LocalDateTime dataHora,
         String localizacao
+    ) { }
+
+    public record HistoricoLocalizacaoDTO(
+        String id,
+        String localizacao,
+        LocalDateTime dataInicio,
+        LocalDateTime dataFim
     ) { }
 }

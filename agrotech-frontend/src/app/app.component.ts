@@ -20,6 +20,7 @@ export class AppComponent {
   private alertaNotificacao       = inject(AlertaNotificacaoService);
 
   sidebarAberta = signal<boolean>(window.innerWidth > 900);
+  totalAlertasNovos = this.alertaNotificacao.totalNovos;
 
   constructor() {
     // Conecta/desconecta o SSE automaticamente conforme o estado de autenticação
@@ -38,6 +39,11 @@ export class AppComponent {
 
   ehAdmin(): boolean {
     return this.usuarioService.obterRole() === UserRoleModel.ADMIN;
+  }
+
+  irParaAlertas(): void {
+    this.alertaNotificacao.reconhecer();
+    this.router.navigate(['/alertas']);
   }
 
   sair(): void {
