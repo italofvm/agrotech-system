@@ -2,7 +2,6 @@ package com.agrotech.agro_tech_system.infra.security;
 
 import java.io.IOException;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -45,15 +44,13 @@ public class SecurityFilter extends OncePerRequestFilter {
 
                                         SecurityContextHolder.getContext()
                                                 .setAuthentication(authentication);
-                                } else {
-                                        // Token válido mas usuário não existe no banco (ex: sessão inválida após restart)
-                                        response.setStatus(HttpStatus.UNAUTHORIZED.value());
-                                        return;
                                 }
+                                // Usuário não encontrado: não define autenticação e deixa
+                                // o Spring Security aplicar as regras (permitAll vs authenticated)
                         } catch (Exception e) {
-                                // Token inválido ou expirado — retorna 401 explicitamente
-                                response.setStatus(HttpStatus.UNAUTHORIZED.value());
-                                return;
+                                // Token inválido ou expirado: limpa o contexto e deixa
+                                // o Spring Security decidir com base nas regras de autorização
+                                SecurityContextHolder.clearContext();
                         }
                 }
 
