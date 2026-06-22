@@ -25,8 +25,8 @@
   --c-border:       #CBD5E0;
   --c-border-light: #E2E8F0;
   --c-text-primary: #263238;
-  --c-text-secondary: #607D8B;
-  --c-text-muted:   #90A4AE;
+  --c-text-secondary: #455A64;
+  --c-text-muted:   #546E7A;
 
   /* Semântico — Status */
   --c-danger:         #D32F2F;
@@ -362,6 +362,35 @@ body {
   width: 100%;
 }
 
+/* Form field: label flutuante e hint mais legíveis */
+.mat-mdc-form-field .mdc-floating-label,
+.mat-mdc-form-field .mat-mdc-floating-label {
+  color: var(--c-text-secondary) !important;
+}
+
+.mat-mdc-form-field.mat-focused .mdc-floating-label,
+.mat-mdc-form-field.mat-focused .mat-mdc-floating-label {
+  color: var(--c-primary-800) !important;
+}
+
+.mat-mdc-form-field-hint,
+.mat-mdc-form-field .mat-mdc-form-field-hint {
+  color: var(--c-text-secondary) !important;
+  font-size: 0.78rem !important;
+}
+
+/* Mat-list: texto secundário (matListItemLine) mais legível */
+.mat-mdc-list-item .mdc-list-item__secondary-text,
+.mdc-list-item__secondary-text {
+  color: var(--c-text-secondary) !important;
+  opacity: 1 !important;
+}
+
+/* Mat-list: texto primário (matListItemTitle) legível */
+.mat-mdc-list-item .mdc-list-item__primary-text {
+  color: var(--c-text-primary) !important;
+}
+
 /* =========================================
    UTILITÁRIOS
    ========================================= */
@@ -497,6 +526,27 @@ body {
     from { opacity: 0; transform: translateY(8px); }
     to   { opacity: 1; transform: translateY(0); }
   }
+}
+
+/* =========================================
+   SNACKBAR DE ALERTA
+   ========================================= */
+.snack-alerta .mdc-snackbar__surface {
+  background-color: #fff3e0 !important;
+  border-left: 4px solid var(--c-warning) !important;
+  color: var(--c-text-primary) !important;
+  max-width: 480px !important;
+}
+
+.snack-alerta .mat-mdc-snack-bar-label {
+  color: var(--c-text-primary) !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+}
+
+.snack-alerta .mat-mdc-button {
+  color: var(--c-primary-800) !important;
+  font-weight: 600 !important;
 }
 
 /* =========================================

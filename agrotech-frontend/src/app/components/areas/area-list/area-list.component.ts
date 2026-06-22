@@ -59,8 +59,10 @@ export class AreaListComponent implements OnInit {
       if (!confirmado) return;
       this.areaService.toggleAtivo(area.id).subscribe({
         next: () => {
+          this.areas = this.areas.map(a =>
+            a.id === area.id ? { ...a, ativo: !a.ativo } : a
+          );
           this.snackBar.open(`Área ${acao === 'ativar' ? 'ativada' : 'desativada'} com sucesso.`, 'Fechar', { duration: 3000 });
-          this.carregarAreas();
         },
         error: () => this.snackBar.open(`Erro ao ${acao} área.`, 'Fechar', { duration: 3000 }),
       });

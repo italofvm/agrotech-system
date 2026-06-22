@@ -5,6 +5,8 @@ import { MaterialModule } from '../../../shared/material/material.module';
 import { RegraService } from '../../../services/regra.service';
 import { RegraModel } from '../../../models/regra.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { UsuarioService } from '../../../services/usuario.service';
+import { UserRoleModel } from '../../../models/user-role.model';
 
 @Component({
   selector: 'app-regra-list',
@@ -15,12 +17,17 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class RegraListComponent implements OnInit {
   private regraService = inject(RegraService);
   private snackBar = inject(MatSnackBar);
+  private usuarioService = inject(UsuarioService);
 
   regras: RegraModel[] = [];
   colunas = ['tipoSensor', 'operador', 'valor', 'ativo', 'acoes'];
 
   ngOnInit(): void {
     this.carregarRegras();
+  }
+
+  ehAdmin(): boolean {
+    return this.usuarioService.obterRole() === UserRoleModel.ADMIN;
   }
 
   carregarRegras(): void {

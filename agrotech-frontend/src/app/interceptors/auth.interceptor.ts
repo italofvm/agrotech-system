@@ -5,6 +5,13 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { catchError, throwError } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
 
+/** Rotas públicas que não precisam de token */
+const ROTAS_PUBLICAS = ['/auth/login', '/cadastro', '/alertas/stream'];
+
+function rotaPublica(url: string): boolean {
+  return ROTAS_PUBLICAS.some(r => url.includes(r));
+}
+
 function tokenEstaExpirado(token: string): boolean {
   try {
     const decoded: any = jwtDecode(token);
@@ -20,6 +27,10 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const snackBar = inject(MatSnackBar);
 
   if (!token) {
+    if (!rotaPublica(req.url)) {
+      router.navigate(['/login']);
+      return throwError(() => new Error('Não autenticado'));
+    }
     return next(req);
   }
 

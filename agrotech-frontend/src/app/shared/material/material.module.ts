@@ -45,6 +45,7 @@ import { NgModule } from '@angular/core';
     MatTabsModule,
     MatPaginatorModule,
     MatDialogModule,
+    MatSnackBarModule,
   ],
 })
 

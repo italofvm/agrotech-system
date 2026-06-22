@@ -44,6 +44,7 @@ public class AreaRepositoryAdapter implements AreaRepository {
                     .map(entityExistente -> {
                         entityExistente.setNome(area.getNome());
                         entityExistente.setDescricao(area.getDescricao());
+                        entityExistente.setAtivo(area.isAtivo());
                         return entityExistente;
                     })
                     .orElseGet(() -> PersistenceMapper.toEntity(area));

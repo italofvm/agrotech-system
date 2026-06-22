@@ -65,8 +65,14 @@
           <span class="header-brand">AgroTech System</span>
         </div>
         <div class="header-right">
-          <button mat-icon-button matTooltip="Notificações" class="header-action-btn">
-            <mat-icon>notifications_none</mat-icon>
+          <button mat-icon-button
+            (click)="irParaAlertas()"
+            matTooltip="Notificações"
+            class="header-action-btn"
+            [matBadge]="totalAlertasNovos() > 0 ? totalAlertasNovos() : null"
+            matBadgeColor="warn"
+            matBadgeSize="small">
+            <mat-icon>{{ totalAlertasNovos() > 0 ? 'notifications_active' : 'notifications_none' }}</mat-icon>
           </button>
           <button mat-icon-button [matMenuTriggerFor]="userMenu" class="header-avatar-btn" matTooltip="Minha conta">
             <mat-icon>account_circle</mat-icon>
